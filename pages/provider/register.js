@@ -94,7 +94,7 @@ export default function ProviderRegister() {
         </label><br/><br/>
 
         {/* Selfie Upload */}
-        <label>سيلفي وأنت تحمل نفس الوثيقة<br/>
+        <label>سيلفي <br/>
           <input type="file" accept="image/*" onChange={(e)=>setSelfieFile(e.target.files[0])} required/>
         </label><br/><br/>
 
