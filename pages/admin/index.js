@@ -7,13 +7,19 @@ export default function Admin() {
 
   // Fetch pending providers on page load
   useEffect(() => {
-    const fetchPendingProviders = async () => {
+  const fetchPendingProviders = async () => {
+    try {
       const response = await fetch('/api/providers/pending');
       const data = await response.json();
-      setProviders(data.providers);
-    };
-    fetchPendingProviders();
-  }, []);
+      setProviders(data.providers || []);  // Always set as an array
+    } catch (error) {
+      console.error('Error fetching pending providers:', error);
+      setProviders([]); // Set empty array if there's an error
+    }
+  };
+  fetchPendingProviders();
+}, []);
+
 
   const bulkCities = () => {
     const list = cities.split('\n').map(l => l.trim()).filter(Boolean);
