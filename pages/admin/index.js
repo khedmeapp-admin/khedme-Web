@@ -783,9 +783,8 @@ export default function Admin() {
 <label><input type="checkbox" defaultChecked /> Employment-Contract</label><br/>
 <label><input type="checkbox" defaultChecked /> Freelancer-Agreement</label><br/>
 <label><input type="checkbox" defaultChecked /> Partnership-Agreement</label><br/>
-<label><input type="checkbox"
-      <button onClick={()=>alert('Categories saved')}>Save</button>
-
+<label><input type="checkbox" defaultChecked /> Employment-Contract</label><br/>
+<button onClick={() => alert('Categories saved')}>Save</button>
       <h2>3. Payment – Wish-Money QR</h2>
       <input type="file" accept="image/*" onChange={saveQr} />
       {qr && <img src={qr} width="200" alt="QR preview" />}
