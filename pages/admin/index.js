@@ -745,7 +745,8 @@ export default function Admin() {
 <label><input type="checkbox" defaultChecked /> Online-Counselling (Zoom)</label><br/>
 <label><input type="checkbox" defaultChecked /> Online-Psychology (Zoom)</label><br/>
 <label><input type="checkbox" defaultChecked /> Online-Psychiatry (Zoom)</label><br/>
-<label><input type="checkbox" defaultChecked /> Online-Therapy (Zoom)</label Animation-2D</label><br/>
+<label><input type="checkbox" defaultChecked /> Online-Therapy (Zoom)</label><br/>
+<label><input type="checkbox" defaultChecked /> Animation-2D</label><br/>  
 <label><input type="checkbox" defaultChecked /> Animation-3D</label><br/>
 <label><input type="checkbox" defaultChecked /> Whiteboard-Animation</label><br/>
 <label><input type="checkbox" defaultChecked /> Podcast-Editing</label><br/>
