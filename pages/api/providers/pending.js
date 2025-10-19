@@ -1,4 +1,3 @@
-// pages/api/providers/pending.js
 import { Pool } from 'pg';
 
 const pool = new Pool({
@@ -15,10 +14,9 @@ export default async function getPendingProviders(req, res) {
     const { rows } = await pool.query(
       'SELECT * FROM providers WHERE approved = false'
     );
-
     res.status(200).json({ providers: rows });
   } catch (err) {
     console.error('[PENDING PROVIDERS]', err);
-    res.status(500).json({ message: 'Server error' });
+    res.status(500).json({ message: 'Server error while fetching providers' });
   }
 }
