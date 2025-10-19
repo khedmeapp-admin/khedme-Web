@@ -11,13 +11,13 @@ export default async function getPendingProviders(req, res) {
   }
 
   try {
+    console.log('Fetching pending providers...');
     const { rows } = await pool.query(
       'SELECT * FROM providers WHERE approved = false'
     );
-    console.log("Pending Providers: ", rows); // Log the providers fetched from DB
     res.status(200).json({ providers: rows });
   } catch (err) {
-    console.error('[PENDING PROVIDERS ERROR]', err); // Log the error
+    console.error('[PENDING PROVIDERS ERROR]:', err);
     res.status(500).json({ message: 'Server error while fetching providers' });
   }
 }
