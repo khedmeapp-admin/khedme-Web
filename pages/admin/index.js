@@ -47,7 +47,7 @@ export default function Admin() {
 
   return (
     <div style={{ padding: 40, fontFamily: 'Arial' }}>
-      <h1>Admin Panel – بلخدمة</h1>
+      <h1>Admin Panel – بالخدمة</h1>
 
       <h2>1. Cities (Bulk)</h2>
       <textarea rows="10" cols="60" placeholder="Achrafieh,أشرفية,Beirut&#10;Aley,عاليه,Mount Lebanon&#10;..." value={cities} onChange={(e) => setCities(e.target.value)} />
