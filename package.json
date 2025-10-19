@@ -1,1 +1,15 @@
-{"name":"khedme-web","scripts":{"dev":"next dev"},"dependencies":{"next":"latest","react":"latest","react-dom":"latest"}}
+{
+  "name": "khedme-web",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "vercel-build": "next build"
+  },
+  "dependencies": {
+    "next": "latest",
+    "react": "latest",
+    "react-dom": "latest",
+    "pg": "^8.11.3"
+  }
+}
