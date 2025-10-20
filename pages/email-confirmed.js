@@ -1,0 +1,21 @@
+// pages/email-confirmed.js
+import { useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
+
+export default function EmailConfirmed() {
+  const searchParams = useSearchParams();
+  const [email, setEmail] = useState("");
+
+  useEffect(() => {
+    // Get the 'email' query parameter from the URL
+    const userEmail = searchParams.get("email");
+    if (userEmail) setEmail(userEmail);
+  }, [searchParams]);
+
+  return (
+    <div style={{ textAlign: "center", marginTop: "50px", fontFamily: "Arial, sans-serif" }}>
+      <h1 style={{ color: "#C32865" }}>Thanks for signing up to Blkhedme!</h1>
+      <p>Your email {email ? `"${email}"` : ""} has been successfully confirmed.</p>
+    </div>
+  );
+}
