@@ -1,18 +1,26 @@
+import dynamic from "next/dynamic";
 import { useEffect, useState, useRef } from "react";
 import { useRouter } from "next/router";
 import { toast } from "sonner";
 import { motion, AnimatePresence } from "framer-motion";
-import confetti from "canvas-confetti";
+
+const confetti = dynamic(() => import("canvas-confetti"), { ssr: false });
 
 export default function AdminApprove() {
   const [providers, setProviders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selected, setSelected] = useState(null);
+  const [isClient, setIsClient] = useState(false);
   const router = useRouter();
   const modalRef = useRef(null);
 
-  // ✅ Fetch pending providers
   useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  useEffect(() => {
+    if (!isClient) return;
+
     const token = localStorage.getItem("adminToken");
     if (!token) {
       router.push("/admin/login");
@@ -35,52 +43,36 @@ export default function AdminApprove() {
     };
 
     fetchProviders();
-  }, [router]);
+  }, [router, isClient]);
 
-  // ✅ Close modal when clicking outside
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (modalRef.current && !modalRef.current.contains(event.target)) {
-        setSelected(null);
-      }
-    };
-
-    if (selected) {
-      document.addEventListener("mousedown", handleClickOutside);
-    } else {
-      document.removeEventListener("mousedown", handleClickOutside);
-    }
-
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, [selected]);
+  if (!isClient) return null;
 
   // ✅ Confetti burst (orange & white theme)
-const triggerConfetti = () => {
-  const duration = 1.5 * 1000;
-  const animationEnd = Date.now() + duration;
-  const defaults = {
-    startVelocity: 30,
-    spread: 360,
-    ticks: 60,
-    zIndex: 1000,
-    colors: ["#E25822", "#FFA94D", "#FFFFFF"],
-  };
+  const triggerConfetti = () => {
+    import("canvas-confetti").then((confetti) => {
+      const duration = 1.5 * 1000;
+      const animationEnd = Date.now() + duration;
+      const defaults = {
+        startVelocity: 30,
+        spread: 360,
+        ticks: 60,
+        zIndex: 1000,
+        colors: ["#E25822", "#FFA94D", "#FFFFFF"],
+      };
 
-  const interval = setInterval(() => {
-    const timeLeft = animationEnd - Date.now();
-    if (timeLeft <= 0) return clearInterval(interval);
+      const interval = setInterval(() => {
+        const timeLeft = animationEnd - Date.now();
+        if (timeLeft <= 0) return clearInterval(interval);
 
-    const particleCount = 40 * (timeLeft / duration);
-    confetti({
-      ...defaults,
-      particleCount,
-      origin: {
-        x: Math.random(),
-        y: Math.random() - 0.2,
-      },
+        const particleCount = 40 * (timeLeft / duration);
+        confetti.default({
+          ...defaults,
+          particleCount,
+          origin: { x: Math.random(), y: Math.random() - 0.2 },
+        });
+      }, 180);
     });
-  }, 180);
-};
+  };
 
   // ✅ Approve or Reject
   const handleAction = async (id, action) => {
