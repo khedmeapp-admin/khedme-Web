@@ -1,0 +1,6 @@
+[00:00:00.868] Server  ERROR   (node:14032) Warning: Setting the NODE_TLS_REJECT_UNAUTHORIZED environment variable to '0' makes TLS connections and HTTPS requests insecure by disabling certificate verification.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[00:00:00.872] Server  LOG      ✓ Ready in 566ms
+[00:14:45.604] Server  LOG      ✓ Compiled in 202ms
+[00:14:45.653] Server  WARN     ⚠ Fast Refresh had to perform a full reload when ./pages/admin/approve.js changed. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+[00:14:45.653] Browser LOG     Refreshing page data due to server-side change

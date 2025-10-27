@@ -1,0 +1,110 @@
+{
+  "version": 3,
+  "pages404": true,
+  "caseSensitive": false,
+  "basePath": "",
+  "redirects": [
+    {
+      "source": "/:path+/",
+      "destination": "/:path+",
+      "internal": true,
+      "priority": true,
+      "statusCode": 308,
+      "regex": "^(?:/((?:[^/]+?)(?:/(?:[^/]+?))*))/$"
+    }
+  ],
+  "headers": [],
+  "rewrites": {
+    "beforeFiles": [],
+    "afterFiles": [],
+    "fallback": []
+  },
+  "dynamicRoutes": [],
+  "staticRoutes": [
+    {
+      "page": "/",
+      "regex": "^/(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/(?:/)?$"
+    },
+    {
+      "page": "/admin",
+      "regex": "^/admin(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/admin(?:/)?$"
+    },
+    {
+      "page": "/admin/approve",
+      "regex": "^/admin/approve(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/admin/approve(?:/)?$"
+    },
+    {
+      "page": "/api/approve",
+      "regex": "^/api/approve(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/approve(?:/)?$"
+    },
+    {
+      "page": "/api/jobs",
+      "regex": "^/api/jobs(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/jobs(?:/)?$"
+    },
+    {
+      "page": "/api/providers",
+      "regex": "^/api/providers(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/providers(?:/)?$"
+    },
+    {
+      "page": "/api/providers/pending",
+      "regex": "^/api/providers/pending(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/providers/pending(?:/)?$"
+    },
+    {
+      "page": "/email-confirmed",
+      "regex": "^/email\\-confirmed(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/email\\-confirmed(?:/)?$"
+    },
+    {
+      "page": "/jobs",
+      "regex": "^/jobs(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/jobs(?:/)?$"
+    },
+    {
+      "page": "/post-job",
+      "regex": "^/post\\-job(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/post\\-job(?:/)?$"
+    },
+    {
+      "page": "/provider/register",
+      "regex": "^/provider/register(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/provider/register(?:/)?$"
+    }
+  ],
+  "dataRoutes": [],
+  "rsc": {
+    "header": "rsc",
+    "varyHeader": "rsc, next-router-state-tree, next-router-prefetch, next-router-segment-prefetch",
+    "prefetchHeader": "next-router-prefetch",
+    "didPostponeHeader": "x-nextjs-postponed",
+    "contentTypeHeader": "text/x-component",
+    "suffix": ".rsc",
+    "prefetchSuffix": ".prefetch.rsc",
+    "prefetchSegmentHeader": "next-router-segment-prefetch",
+    "prefetchSegmentSuffix": ".segment.rsc",
+    "prefetchSegmentDirSuffix": ".segments",
+    "clientParamParsing": false,
+    "dynamicRSCPrerender": false
+  },
+  "rewriteHeaders": {
+    "pathHeader": "x-nextjs-rewritten-path",
+    "queryHeader": "x-nextjs-rewritten-query"
+  }
+}
