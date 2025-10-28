@@ -35,8 +35,8 @@ export default function ApprovePage() {
   };
 
   return (
-    <div className="p-8 text-white">
-      <h1 className="text-3xl font-bold mb-6">Pending Providers</h1>
+    <div className="p-8 bg-white text-gray-900 min-h-screen">
+      <h1 className="text-3xl font-bold mb-6 text-orange-600">Pending Providers</h1>
       {providers.length === 0 ? (
         <p>No pending providers.</p>
       ) : (
@@ -44,18 +44,18 @@ export default function ApprovePage() {
           {providers.map((p) => (
             <div
               key={p.id}
-              className="bg-gray-800 p-4 rounded-xl flex justify-between items-center"
+              className="bg-gray-100 border border-orange-200 p-4 rounded-xl flex justify-between items-center"
             >
               <div>
-                <p className="font-semibold">{p.name || "Unnamed"}</p>
-                <p className="text-gray-400 text-sm">{p.service}</p>
+                <p className="font-semibold text-lg">{p.name || "Unnamed"}</p>
+                <p className="text-gray-600 text-sm">{p.service}</p>
               </div>
               <button
                 onClick={() => approveProvider(p.id)}
                 disabled={loading}
-                className="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-lg disabled:opacity-50"
+                className="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-md transition disabled:opacity-50"
               >
-                {loading ? "Processing..." : "Approve"}
+                {loading ? "Approving..." : "Approve"}
               </button>
             </div>
           ))}
