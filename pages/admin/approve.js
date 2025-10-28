@@ -2,7 +2,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { Button } from "@/components/ui/button"; // ✅ correct path
+import { Button } from '../../components/ui/button'
 
 export default function ApprovePage() {
   const [providers, setProviders] = useState([]);
