@@ -1,8 +1,6 @@
-
 "use client";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { Button } from '../../components/ui/button'
 
 export default function ApprovePage() {
   const [providers, setProviders] = useState([]);
@@ -52,13 +50,13 @@ export default function ApprovePage() {
                 <p className="font-semibold">{p.name || "Unnamed"}</p>
                 <p className="text-gray-400 text-sm">{p.service}</p>
               </div>
-              <Button
+              <button
                 onClick={() => approveProvider(p.id)}
                 disabled={loading}
-                className="bg-orange-500 hover:bg-orange-600 text-white"
+                className="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-lg disabled:opacity-50"
               >
-                Approve
-              </Button>
+                {loading ? "Processing..." : "Approve"}
+              </button>
             </div>
           ))}
         </div>
