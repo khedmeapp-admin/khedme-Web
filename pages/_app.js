@@ -1,7 +1,7 @@
 // pages/_app.js
 import "../src/styles/globals.css";
-import Navbar from "@/src/components/Navbar";
-import Footer from "@/src/components/Footer";
+import Navbar from "../src/components/Navbar";
+import Footer from "../src/components/Footer";
 import NextNProgress from "nextjs-progressbar";
 import { AnimatePresence, motion } from "framer-motion";
 import { useRouter } from "next/router";
@@ -33,7 +33,7 @@ export default function App({ Component, pageProps }) {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -10 }}
           transition={{ duration: 0.25, ease: "easeInOut" }}
-          className="flex-grow pt-20" // 🟧 Added padding to push content down
+          className="flex-grow pt-20"
         >
           <Component {...pageProps} />
         </motion.main>
