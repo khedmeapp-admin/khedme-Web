@@ -25,15 +25,26 @@ export default function ProviderDashboard() {
   }, [provider]);
 
   const fetchApplications = async () => {
+    if (!provider?.id) return;
+
     try {
       setLoading(true);
       const res = await fetch(
-        `https://khedme-api.onrender.com/api/providers/applications/${provider.id}`
+        `${process.env.NEXT_PUBLIC_API_URL}/api/providers/applications/${provider.id}`
       );
+
+      if (!res.ok) throw new Error("Network error");
+
       const data = await res.json();
-      if (data.success) setApplications(data.applications);
+
+      if (data.success) {
+        setApplications(data.applications || []);
+      } else {
+        toast.error("Failed to load applications ❌");
+      }
     } catch (err) {
-      toast.error("Failed to load applications ❌");
+      console.error("❌ Error fetching applications:", err);
+      toast.error("Failed to connect to server ❌");
     } finally {
       setLoading(false);
       setFetching(false);
@@ -43,6 +54,7 @@ export default function ProviderDashboard() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-orange-50 to-white text-gray-800">
       <div className="max-w-4xl mx-auto px-4 py-10">
+        {/* Header */}
         <div className="flex items-center justify-between mb-8">
           <div>
             <h1 className="text-3xl font-bold text-orange-600">
@@ -50,7 +62,10 @@ export default function ProviderDashboard() {
             </h1>
             {provider && (
               <p className="text-gray-600 mt-1">
-                Welcome, <span className="font-semibold">{provider.name}</span>
+                Welcome,{" "}
+                <span className="font-semibold">
+                  {provider.name || provider.full_name}
+                </span>
               </p>
             )}
           </div>
@@ -60,13 +75,12 @@ export default function ProviderDashboard() {
             disabled={loading}
             className="bg-orange-500 hover:bg-orange-600 text-white flex items-center gap-2"
           >
-            <RefreshCw
-              className={`w-4 h-4 ${loading ? "animate-spin" : ""}`}
-            />
+            <RefreshCw className={`w-4 h-4 ${loading ? "animate-spin" : ""}`} />
             Refresh
           </Button>
         </div>
 
+        {/* Body */}
         {fetching ? (
           <div className="flex justify-center py-20">
             <div className="animate-pulse text-gray-400">Loading...</div>
@@ -79,16 +93,19 @@ export default function ProviderDashboard() {
           <div className="grid gap-4">
             {applications.map((app) => (
               <div
-                key={app.id}
+                key={app.application_id || app.id}
                 className="bg-white p-5 rounded-2xl shadow-sm border border-orange-100 hover:shadow-md transition"
               >
                 <h2 className="text-lg font-semibold text-gray-800">
-                  {app.job_service}
+                  {app.service || app.job_service || "Untitled Job"}
                 </h2>
                 <p className="text-gray-500 text-sm">
-                  {app.job_district} • Budget: ${app.job_budget}
+                  {app.district || app.job_district} • Budget: $
+                  {app.budget || app.job_budget}
                 </p>
-                <p className="mt-2 text-gray-700">{app.message}</p>
+                <p className="mt-2 text-gray-700">
+                  {app.message || "No message provided."}
+                </p>
                 <p
                   className={`mt-3 inline-block px-3 py-1 rounded-full text-sm font-medium ${
                     app.status === "approved"
@@ -98,7 +115,9 @@ export default function ProviderDashboard() {
                       : "bg-yellow-100 text-yellow-700"
                   }`}
                 >
-                  {app.status.charAt(0).toUpperCase() + app.status.slice(1)}
+                  {app.status
+                    ? app.status.charAt(0).toUpperCase() + app.status.slice(1)
+                    : "Pending"}
                 </p>
               </div>
             ))}
