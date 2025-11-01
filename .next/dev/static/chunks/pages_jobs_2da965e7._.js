@@ -6,9 +6,7 @@
   "static/chunks/node_modules_next_dist_client_d0aa886c._.js",
   "static/chunks/node_modules_next_dist_6024eba3._.js",
   "static/chunks/node_modules_react-dom_4411d9bd._.js",
-  "static/chunks/node_modules_motion-dom_dist_es_01ad550f._.js",
-  "static/chunks/node_modules_framer-motion_dist_es_c152664b._.js",
-  "static/chunks/node_modules_dda87b17._.js",
+  "static/chunks/node_modules_26250cbb._.js",
   "static/chunks/[root-of-the-server]__9127b0a7._.js"
 ],
     source: "entry"

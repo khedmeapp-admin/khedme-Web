@@ -467,614 +467,187 @@ function triggerUpdate(msg) {
 
 __turbopack_context__.s([
     "default",
-    ()=>AdminApprove
+    ()=>__TURBOPACK__default__export__
 ]);
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$polyfills$2f$process$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = /*#__PURE__*/ __turbopack_context__.i("[project]/node_modules/next/dist/build/polyfills/process.js [client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/react/jsx-dev-runtime.js [client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dynamic$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dynamic.js [client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/react/index.js [client] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$router$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/router.js [client] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$sonner$2f$dist$2f$index$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/sonner/dist/index.mjs [client] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$framer$2d$motion$2f$dist$2f$es$2f$render$2f$components$2f$motion$2f$proxy$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/framer-motion/dist/es/render/components/motion/proxy.mjs [client] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$framer$2d$motion$2f$dist$2f$es$2f$components$2f$AnimatePresence$2f$index$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/framer-motion/dist/es/components/AnimatePresence/index.mjs [client] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$canvas$2d$confetti$2f$dist$2f$confetti$2e$module$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/canvas-confetti/dist/confetti.module.mjs [client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$axios$2f$lib$2f$axios$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/axios/lib/axios.js [client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$hot$2d$toast$2f$dist$2f$index$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/react-hot-toast/dist/index.mjs [client] (ecmascript)");
 ;
 var _s = __turbopack_context__.k.signature();
+"use client";
 ;
 ;
 ;
 ;
-;
-function AdminApprove() {
+function ApprovePageComponent() {
     _s();
     const [providers, setProviders] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useState"])([]);
-    const [loading, setLoading] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useState"])(true);
-    const [selected, setSelected] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useState"])(null);
-    const router = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$router$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useRouter"])();
-    const modalRef = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useRef"])(null);
-    // ✅ Fetch pending providers
+    const [loadingIds, setLoadingIds] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useState"])([]); // track which provider is loading
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useEffect"])({
-        "AdminApprove.useEffect": ()=>{
-            const token = localStorage.getItem("adminToken");
-            if (!token) {
-                router.push("/admin/login");
-                return;
-            }
-            const fetchProviders = {
-                "AdminApprove.useEffect.fetchProviders": async ()=>{
+        "ApprovePageComponent.useEffect": ()=>{
+            const fetchPendingProviders = {
+                "ApprovePageComponent.useEffect.fetchPendingProviders": async ()=>{
                     try {
-                        const res = await fetch(`${("TURBOPACK compile-time value", "https://khedme-api.onrender.com")}/api/providers/pending`);
-                        const data = await res.json();
-                        setProviders(data.providers || []);
+                        const res = await __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$axios$2f$lib$2f$axios$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"].get("https://khedme-api.onrender.com/api/providers/pending");
+                        setProviders(res.data.providers || []);
                     } catch (err) {
                         console.error("Error fetching providers:", err);
-                        __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$sonner$2f$dist$2f$index$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__["toast"].error("Failed to load providers.", {
-                            style: {
-                                background: "#FFE4E1",
-                                color: "#E25822",
-                                border: "1px solid #E25822"
-                            }
-                        });
-                    } finally{
-                        setLoading(false);
+                        __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$hot$2d$toast$2f$dist$2f$index$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__["default"].error("Failed to fetch pending providers ❌");
                     }
                 }
-            }["AdminApprove.useEffect.fetchProviders"];
-            fetchProviders();
+            }["ApprovePageComponent.useEffect.fetchPendingProviders"];
+            fetchPendingProviders();
         }
-    }["AdminApprove.useEffect"], [
-        router
-    ]);
-    // ✅ Close modal when clicking outside
-    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useEffect"])({
-        "AdminApprove.useEffect": ()=>{
-            const handleClickOutside = {
-                "AdminApprove.useEffect.handleClickOutside": (event)=>{
-                    if (modalRef.current && !modalRef.current.contains(event.target)) {
-                        setSelected(null);
-                    }
-                }
-            }["AdminApprove.useEffect.handleClickOutside"];
-            if (selected) {
-                document.addEventListener("mousedown", handleClickOutside);
-            } else {
-                document.removeEventListener("mousedown", handleClickOutside);
-            }
-            return ({
-                "AdminApprove.useEffect": ()=>document.removeEventListener("mousedown", handleClickOutside)
-            })["AdminApprove.useEffect"];
-        }
-    }["AdminApprove.useEffect"], [
-        selected
-    ]);
-    // ✅ Confetti burst
-    const triggerConfetti = ()=>{
-        const duration = 1.2 * 1000;
-        const animationEnd = Date.now() + duration;
-        const defaults = {
-            startVelocity: 25,
-            spread: 360,
-            ticks: 40,
-            zIndex: 1000
-        };
-        const interval = setInterval(()=>{
-            const timeLeft = animationEnd - Date.now();
-            if (timeLeft <= 0) return clearInterval(interval);
-            const particleCount = 50 * (timeLeft / duration);
-            (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$canvas$2d$confetti$2f$dist$2f$confetti$2e$module$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__["default"])({
-                ...defaults,
-                particleCount,
-                origin: {
-                    x: Math.random(),
-                    y: Math.random() - 0.2
-                }
-            });
-        }, 150);
-    };
-    // ✅ Approve or Reject
-    const handleAction = async (id, action)=>{
+    }["ApprovePageComponent.useEffect"], []);
+    const markLoading = (id)=>setLoadingIds((s)=>[
+                ...s,
+                id
+            ]);
+    const unmarkLoading = (id)=>setLoadingIds((s)=>s.filter((x)=>x !== id));
+    const approveProvider = async (id)=>{
+        markLoading(id);
         try {
-            const endpoint = `${("TURBOPACK compile-time value", "https://khedme-api.onrender.com")}/api/providers/${action}`;
-            const res = await fetch(endpoint, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    provider_id: id
-                })
-            });
-            const data = await res.json();
-            if (!res.ok) throw new Error(data.message);
+            await __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$axios$2f$lib$2f$axios$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"].post(`https://khedme-api.onrender.com/api/providers/approve?id=${id}`);
+            __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$hot$2d$toast$2f$dist$2f$index$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__["default"].success("Provider approved ✅");
             setProviders((prev)=>prev.filter((p)=>p.id !== id));
-            setSelected(null);
-            if (action === "approve") triggerConfetti();
-            __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$sonner$2f$dist$2f$index$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__["toast"].success(action === "approve" ? "✅ Provider approved!" : "❌ Provider rejected!", {
-                style: {
-                    background: "#FFF2E5",
-                    color: "#E25822",
-                    border: "1px solid #E25822"
-                }
-            });
         } catch (err) {
-            console.error("Action error:", err);
-            __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$sonner$2f$dist$2f$index$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__["toast"].error(err.message || "Action failed.", {
-                style: {
-                    background: "#FFE4E1",
-                    color: "#E25822",
-                    border: "1px solid #E25822"
-                }
-            });
+            console.error("Error approving provider:", err);
+            __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$hot$2d$toast$2f$dist$2f$index$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__["default"].error("Approval failed ❌");
+        } finally{
+            unmarkLoading(id);
         }
     };
-    const handleLogout = ()=>{
-        localStorage.removeItem("adminToken");
-        (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$sonner$2f$dist$2f$index$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__["toast"])("👋 Logged out", {
-            style: {
-                background: "#FFF2E5",
-                color: "#E25822",
-                border: "1px solid #E25822"
-            }
-        });
-        router.push("/admin/login");
+    const rejectProvider = async (id)=>{
+        // optional confirm
+        if (!confirm("Reject this provider? This action can be undone by re-registering.")) return;
+        markLoading(id);
+        try {
+            await __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$axios$2f$lib$2f$axios$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"].post(`https://khedme-api.onrender.com/api/providers/reject?id=${id}`);
+            __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$hot$2d$toast$2f$dist$2f$index$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__["default"].success("Provider rejected ✅");
+            setProviders((prev)=>prev.filter((p)=>p.id !== id));
+        } catch (err) {
+            console.error("Error rejecting provider:", err);
+            __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$hot$2d$toast$2f$dist$2f$index$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__["default"].error("Reject failed ❌");
+        } finally{
+            unmarkLoading(id);
+        }
     };
-    if (loading) return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-        className: "text-center mt-20 text-orange-500",
-        children: "Loading providers..."
-    }, void 0, false, {
-        fileName: "[project]/pages/admin/approve.js",
-        lineNumber: 116,
-        columnNumber: 23
-    }, this);
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-        className: "min-h-screen bg-orange-50 p-8",
+        className: "p-8 bg-gradient-to-br from-orange-50 to-white text-gray-900 min-h-screen",
         children: [
-            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                className: "flex justify-between items-center mb-6",
-                children: [
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h1", {
-                        className: "text-xl font-semibold text-orange-600",
-                        children: "Pending Providers"
-                    }, void 0, false, {
-                        fileName: "[project]/pages/admin/approve.js",
-                        lineNumber: 121,
-                        columnNumber: 9
-                    }, this),
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
-                        onClick: handleLogout,
-                        className: "text-sm px-4 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition",
-                        children: "Logout"
-                    }, void 0, false, {
-                        fileName: "[project]/pages/admin/approve.js",
-                        lineNumber: 122,
-                        columnNumber: 9
-                    }, this)
-                ]
-            }, void 0, true, {
-                fileName: "[project]/pages/admin/approve.js",
-                lineNumber: 120,
-                columnNumber: 7
-            }, this),
-            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                className: "bg-white shadow rounded-xl border border-orange-100 overflow-hidden",
-                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("table", {
-                    className: "w-full text-left border-collapse",
-                    children: [
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("thead", {
-                            className: "bg-orange-100 text-orange-700",
-                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("tr", {
-                                children: [
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
-                                        className: "py-3 px-4",
-                                        children: "Name"
-                                    }, void 0, false, {
-                                        fileName: "[project]/pages/admin/approve.js",
-                                        lineNumber: 134,
-                                        columnNumber: 15
-                                    }, this),
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
-                                        className: "py-3 px-4",
-                                        children: "Phone"
-                                    }, void 0, false, {
-                                        fileName: "[project]/pages/admin/approve.js",
-                                        lineNumber: 135,
-                                        columnNumber: 15
-                                    }, this),
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
-                                        className: "py-3 px-4",
-                                        children: "Branch"
-                                    }, void 0, false, {
-                                        fileName: "[project]/pages/admin/approve.js",
-                                        lineNumber: 136,
-                                        columnNumber: 15
-                                    }, this),
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
-                                        className: "py-3 px-4",
-                                        children: "Service"
-                                    }, void 0, false, {
-                                        fileName: "[project]/pages/admin/approve.js",
-                                        lineNumber: 137,
-                                        columnNumber: 15
-                                    }, this),
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
-                                        className: "py-3 px-4",
-                                        children: "District"
-                                    }, void 0, false, {
-                                        fileName: "[project]/pages/admin/approve.js",
-                                        lineNumber: 138,
-                                        columnNumber: 15
-                                    }, this),
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
-                                        className: "py-3 px-4 text-center",
-                                        children: "Actions"
-                                    }, void 0, false, {
-                                        fileName: "[project]/pages/admin/approve.js",
-                                        lineNumber: 139,
-                                        columnNumber: 15
-                                    }, this)
-                                ]
-                            }, void 0, true, {
-                                fileName: "[project]/pages/admin/approve.js",
-                                lineNumber: 133,
-                                columnNumber: 13
-                            }, this)
-                        }, void 0, false, {
-                            fileName: "[project]/pages/admin/approve.js",
-                            lineNumber: 132,
-                            columnNumber: 11
-                        }, this),
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("tbody", {
-                            children: providers.length === 0 ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("tr", {
-                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
-                                    colSpan: "6",
-                                    className: "text-center py-6 text-gray-500",
-                                    children: "No pending providers 🎉"
-                                }, void 0, false, {
-                                    fileName: "[project]/pages/admin/approve.js",
-                                    lineNumber: 145,
-                                    columnNumber: 17
-                                }, this)
-                            }, void 0, false, {
-                                fileName: "[project]/pages/admin/approve.js",
-                                lineNumber: 144,
-                                columnNumber: 15
-                            }, this) : providers.map((p)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("tr", {
-                                    className: "border-t hover:bg-orange-50",
-                                    children: [
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
-                                            onClick: ()=>setSelected(p),
-                                            className: "py-3 px-4 text-orange-600 font-medium cursor-pointer hover:underline",
-                                            children: p.name
-                                        }, void 0, false, {
-                                            fileName: "[project]/pages/admin/approve.js",
-                                            lineNumber: 152,
-                                            columnNumber: 19
-                                        }, this),
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
-                                            className: "py-3 px-4",
-                                            children: p.phone
-                                        }, void 0, false, {
-                                            fileName: "[project]/pages/admin/approve.js",
-                                            lineNumber: 158,
-                                            columnNumber: 19
-                                        }, this),
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
-                                            className: "py-3 px-4",
-                                            children: p.branch || "—"
-                                        }, void 0, false, {
-                                            fileName: "[project]/pages/admin/approve.js",
-                                            lineNumber: 159,
-                                            columnNumber: 19
-                                        }, this),
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
-                                            className: "py-3 px-4",
-                                            children: p.service || "—"
-                                        }, void 0, false, {
-                                            fileName: "[project]/pages/admin/approve.js",
-                                            lineNumber: 160,
-                                            columnNumber: 19
-                                        }, this),
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
-                                            className: "py-3 px-4",
-                                            children: p.district || "—"
-                                        }, void 0, false, {
-                                            fileName: "[project]/pages/admin/approve.js",
-                                            lineNumber: 161,
-                                            columnNumber: 19
-                                        }, this),
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
-                                            className: "py-3 px-4 text-center space-x-2",
-                                            children: [
-                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$framer$2d$motion$2f$dist$2f$es$2f$render$2f$components$2f$motion$2f$proxy$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__["motion"].button, {
-                                                    whileHover: {
-                                                        scale: 1.08
-                                                    },
-                                                    whileTap: {
-                                                        scale: 0.95
-                                                    },
-                                                    onClick: ()=>handleAction(p.id, "approve"),
-                                                    className: "px-3 py-1 bg-orange-500 text-white rounded-md hover:bg-orange-600 text-sm",
-                                                    children: "Approve"
-                                                }, void 0, false, {
-                                                    fileName: "[project]/pages/admin/approve.js",
-                                                    lineNumber: 163,
-                                                    columnNumber: 21
-                                                }, this),
-                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$framer$2d$motion$2f$dist$2f$es$2f$render$2f$components$2f$motion$2f$proxy$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__["motion"].button, {
-                                                    whileHover: {
-                                                        scale: 1.08
-                                                    },
-                                                    whileTap: {
-                                                        scale: 0.95
-                                                    },
-                                                    onClick: ()=>handleAction(p.id, "reject"),
-                                                    className: "px-3 py-1 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 text-sm",
-                                                    children: "Reject"
-                                                }, void 0, false, {
-                                                    fileName: "[project]/pages/admin/approve.js",
-                                                    lineNumber: 171,
-                                                    columnNumber: 21
-                                                }, this)
-                                            ]
-                                        }, void 0, true, {
-                                            fileName: "[project]/pages/admin/approve.js",
-                                            lineNumber: 162,
-                                            columnNumber: 19
-                                        }, this)
-                                    ]
-                                }, p.id, true, {
-                                    fileName: "[project]/pages/admin/approve.js",
-                                    lineNumber: 151,
-                                    columnNumber: 17
-                                }, this))
-                        }, void 0, false, {
-                            fileName: "[project]/pages/admin/approve.js",
-                            lineNumber: 142,
-                            columnNumber: 11
-                        }, this)
-                    ]
-                }, void 0, true, {
-                    fileName: "[project]/pages/admin/approve.js",
-                    lineNumber: 131,
-                    columnNumber: 9
-                }, this)
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$hot$2d$toast$2f$dist$2f$index$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__["Toaster"], {
+                position: "top-center"
             }, void 0, false, {
                 fileName: "[project]/pages/admin/approve.js",
-                lineNumber: 130,
+                lineNumber: 63,
                 columnNumber: 7
             }, this),
-            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$framer$2d$motion$2f$dist$2f$es$2f$components$2f$AnimatePresence$2f$index$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__["AnimatePresence"], {
-                children: selected && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$framer$2d$motion$2f$dist$2f$es$2f$render$2f$components$2f$motion$2f$proxy$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__["motion"].div, {
-                    className: "fixed inset-0 bg-black/50 flex items-center justify-center z-50",
-                    initial: {
-                        opacity: 0
-                    },
-                    animate: {
-                        opacity: 1
-                    },
-                    exit: {
-                        opacity: 0
-                    },
-                    children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$framer$2d$motion$2f$dist$2f$es$2f$render$2f$components$2f$motion$2f$proxy$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__["motion"].div, {
-                        ref: modalRef,
-                        initial: {
-                            opacity: 0,
-                            y: 40,
-                            scale: 0.95
-                        },
-                        animate: {
-                            opacity: 1,
-                            y: 0,
-                            scale: 1
-                        },
-                        exit: {
-                            opacity: 0,
-                            y: 40,
-                            scale: 0.95
-                        },
-                        transition: {
-                            duration: 0.3,
-                            ease: "easeOut"
-                        },
-                        className: "bg-white rounded-xl shadow-lg p-6 w-full max-w-md border border-orange-200 relative",
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h1", {
+                className: "text-3xl font-bold mb-6 text-orange-600 text-center",
+                children: "Pending Providers"
+            }, void 0, false, {
+                fileName: "[project]/pages/admin/approve.js",
+                lineNumber: 64,
+                columnNumber: 7
+            }, this),
+            providers.length === 0 ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                className: "text-center text-gray-600",
+                children: "No pending providers 🎉"
+            }, void 0, false, {
+                fileName: "[project]/pages/admin/approve.js",
+                lineNumber: 69,
+                columnNumber: 9
+            }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                className: "max-w-3xl mx-auto grid gap-4",
+                children: providers.map((p)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        className: "bg-white shadow-md border border-orange-100 p-5 rounded-2xl flex justify-between items-center hover:shadow-lg transition",
                         children: [
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
-                                onClick: ()=>setSelected(null),
-                                className: "absolute top-3 right-3 text-gray-500 hover:text-gray-700",
-                                children: "✕"
-                            }, void 0, false, {
-                                fileName: "[project]/pages/admin/approve.js",
-                                lineNumber: 206,
-                                columnNumber: 15
-                            }, this),
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
-                                className: "text-xl font-semibold text-orange-600 mb-4 text-center",
-                                children: "Provider Details"
-                            }, void 0, false, {
-                                fileName: "[project]/pages/admin/approve.js",
-                                lineNumber: 213,
-                                columnNumber: 15
-                            }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                className: "space-y-2 text-gray-700",
                                 children: [
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                        children: [
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("strong", {
-                                                children: "Name:"
-                                            }, void 0, false, {
-                                                fileName: "[project]/pages/admin/approve.js",
-                                                lineNumber: 218,
-                                                columnNumber: 20
-                                            }, this),
-                                            " ",
-                                            selected.name
-                                        ]
-                                    }, void 0, true, {
+                                        className: "font-semibold text-lg",
+                                        children: p.name || "Unnamed"
+                                    }, void 0, false, {
                                         fileName: "[project]/pages/admin/approve.js",
-                                        lineNumber: 218,
+                                        lineNumber: 78,
                                         columnNumber: 17
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                        className: "text-gray-600 text-sm",
                                         children: [
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("strong", {
-                                                children: "Phone:"
-                                            }, void 0, false, {
-                                                fileName: "[project]/pages/admin/approve.js",
-                                                lineNumber: 219,
-                                                columnNumber: 20
-                                            }, this),
-                                            " ",
-                                            selected.phone
+                                            p.service,
+                                            " — ",
+                                            p.district
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/pages/admin/approve.js",
-                                        lineNumber: 219,
-                                        columnNumber: 17
-                                    }, this),
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                        children: [
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("strong", {
-                                                children: "Branch:"
-                                            }, void 0, false, {
-                                                fileName: "[project]/pages/admin/approve.js",
-                                                lineNumber: 220,
-                                                columnNumber: 20
-                                            }, this),
-                                            " ",
-                                            selected.branch || "—"
-                                        ]
-                                    }, void 0, true, {
-                                        fileName: "[project]/pages/admin/approve.js",
-                                        lineNumber: 220,
-                                        columnNumber: 17
-                                    }, this),
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                        children: [
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("strong", {
-                                                children: "Service:"
-                                            }, void 0, false, {
-                                                fileName: "[project]/pages/admin/approve.js",
-                                                lineNumber: 221,
-                                                columnNumber: 20
-                                            }, this),
-                                            " ",
-                                            selected.service || "—"
-                                        ]
-                                    }, void 0, true, {
-                                        fileName: "[project]/pages/admin/approve.js",
-                                        lineNumber: 221,
-                                        columnNumber: 17
-                                    }, this),
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                        children: [
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("strong", {
-                                                children: "District:"
-                                            }, void 0, false, {
-                                                fileName: "[project]/pages/admin/approve.js",
-                                                lineNumber: 222,
-                                                columnNumber: 20
-                                            }, this),
-                                            " ",
-                                            selected.district || "—"
-                                        ]
-                                    }, void 0, true, {
-                                        fileName: "[project]/pages/admin/approve.js",
-                                        lineNumber: 222,
-                                        columnNumber: 17
-                                    }, this),
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                        children: [
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("strong", {
-                                                children: "Created At:"
-                                            }, void 0, false, {
-                                                fileName: "[project]/pages/admin/approve.js",
-                                                lineNumber: 223,
-                                                columnNumber: 20
-                                            }, this),
-                                            " ",
-                                            selected.created_at?.split("T")[0] || "—"
-                                        ]
-                                    }, void 0, true, {
-                                        fileName: "[project]/pages/admin/approve.js",
-                                        lineNumber: 223,
+                                        lineNumber: 79,
                                         columnNumber: 17
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/pages/admin/approve.js",
-                                lineNumber: 217,
+                                lineNumber: 77,
                                 columnNumber: 15
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                className: "flex justify-end space-x-3 mt-6",
+                                className: "flex items-center gap-3",
                                 children: [
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$framer$2d$motion$2f$dist$2f$es$2f$render$2f$components$2f$motion$2f$proxy$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__["motion"].button, {
-                                        whileHover: {
-                                            scale: 1.08
-                                        },
-                                        whileTap: {
-                                            scale: 0.95
-                                        },
-                                        onClick: ()=>handleAction(selected.id, "approve"),
-                                        className: "px-4 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600",
-                                        children: "Approve"
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                        onClick: ()=>rejectProvider(p.id),
+                                        disabled: loadingIds.includes(p.id),
+                                        className: "bg-gray-200 hover:bg-gray-300 text-gray-800 px-3 py-1 rounded-md transition disabled:opacity-50 disabled:cursor-not-allowed",
+                                        children: loadingIds.includes(p.id) ? "Processing..." : "Reject"
                                     }, void 0, false, {
                                         fileName: "[project]/pages/admin/approve.js",
-                                        lineNumber: 227,
+                                        lineNumber: 83,
                                         columnNumber: 17
                                     }, this),
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$framer$2d$motion$2f$dist$2f$es$2f$render$2f$components$2f$motion$2f$proxy$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__["motion"].button, {
-                                        whileHover: {
-                                            scale: 1.08
-                                        },
-                                        whileTap: {
-                                            scale: 0.95
-                                        },
-                                        onClick: ()=>handleAction(selected.id, "reject"),
-                                        className: "px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300",
-                                        children: "Reject"
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                        onClick: ()=>approveProvider(p.id),
+                                        disabled: loadingIds.includes(p.id),
+                                        className: "bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-md transition disabled:opacity-50 disabled:cursor-not-allowed",
+                                        children: loadingIds.includes(p.id) ? "Processing..." : "Approve"
                                     }, void 0, false, {
                                         fileName: "[project]/pages/admin/approve.js",
-                                        lineNumber: 235,
+                                        lineNumber: 91,
                                         columnNumber: 17
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/pages/admin/approve.js",
-                                lineNumber: 226,
+                                lineNumber: 82,
                                 columnNumber: 15
                             }, this)
                         ]
-                    }, "modal", true, {
+                    }, p.id, true, {
                         fileName: "[project]/pages/admin/approve.js",
-                        lineNumber: 197,
+                        lineNumber: 73,
                         columnNumber: 13
-                    }, this)
-                }, "overlay", false, {
-                    fileName: "[project]/pages/admin/approve.js",
-                    lineNumber: 190,
-                    columnNumber: 11
-                }, this)
+                    }, this))
             }, void 0, false, {
                 fileName: "[project]/pages/admin/approve.js",
-                lineNumber: 188,
-                columnNumber: 7
+                lineNumber: 71,
+                columnNumber: 9
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/pages/admin/approve.js",
-        lineNumber: 119,
+        lineNumber: 62,
         columnNumber: 5
     }, this);
 }
-_s(AdminApprove, "SX3cB+aQFWXhMPyRv0SNJsnbJGo=", false, function() {
-    return [
-        __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$router$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useRouter"]
-    ];
+_s(ApprovePageComponent, "JQP/ObFKx9okPkU7obc/0vjaMsc=");
+_c = ApprovePageComponent;
+const __TURBOPACK__default__export__ = _c2 = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dynamic$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"])(_c1 = ()=>Promise.resolve(ApprovePageComponent), {
+    ssr: false
 });
-_c = AdminApprove;
-var _c;
-__turbopack_context__.k.register(_c, "AdminApprove");
+var _c, _c1, _c2;
+__turbopack_context__.k.register(_c, "ApprovePageComponent");
+__turbopack_context__.k.register(_c1, "%default%$dynamic");
+__turbopack_context__.k.register(_c2, "%default%");
 if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelpers !== null) {
     __turbopack_context__.k.registerExports(__turbopack_context__.m, globalThis.$RefreshHelpers$);
 }

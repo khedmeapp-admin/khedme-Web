@@ -1,176 +1,90 @@
-// src/components/Navbar.js
-import { useState, useEffect } from "react";
+"use client";
 import Link from "next/link";
-import { useRouter } from "next/router";
-import { Menu, X } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
+import { usePathname } from "next/navigation";
+import { Button } from "@/components/ui/button";
+import { RefreshCw } from "lucide-react";
+import { motion } from "framer-motion";
 
-export default function Navbar() {
-  const router = useRouter();
-  const [isOpen, setIsOpen] = useState(false);
-  const [hovered, setHovered] = useState(null);
-  const [mobileHovered, setMobileHovered] = useState(null);
-  const [scrolled, setScrolled] = useState(false);
+export default function Navbar({ onRefresh }) {
+  const pathname = usePathname();
 
-  // Track scroll to change navbar background
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 10);
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  const navItems = [
+  const links = [
     { href: "/", label: "Home" },
     { href: "/jobs", label: "Jobs" },
-    { href: "/provider", label: "Provider" },
+    { href: "/provider/dashboard", label: "Provider" },
     { href: "/admin/approve", label: "Admin" },
   ];
 
-  const isActive = (href) =>
-    router.pathname === href || router.pathname.startsWith(`${href}/`);
-
   return (
-    <header
-      className={`w-full fixed top-0 z-50 border-b border-orange-100 backdrop-blur-sm transition-all duration-300 ${
-        scrolled
-          ? "bg-white/95 shadow-sm"
-          : "bg-white/60 shadow-none"
-      }`}
-    >
-      <div className="max-w-6xl mx-auto px-6 py-3 flex items-center justify-between">
-        {/* Logo */}
+    <nav className="w-full bg-white shadow-sm border-b border-orange-100">
+      <div className="max-w-6xl mx-auto flex items-center justify-between px-6 py-3">
+        {/* Animated Logo */}
         <Link
           href="/"
-          className="flex items-center space-x-1 text-2xl font-bold text-orange-500"
+          className="text-2xl font-bold tracking-tight flex items-baseline select-none"
         >
           <motion.span
-            whileHover={{ scale: 1.08 }}
-            transition={{ type: "spring", stiffness: 300 }}
+            className="text-orange-600"
+            initial={{ opacity: 0, y: -8 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
           >
             Khedme
           </motion.span>
-          <span className="text-xl text-gray-800 font-semibold">بال</span>
+          <motion.span
+            className="text-black ml-1 text-[1.6rem] font-extrabold leading-none"
+            initial={{ opacity: 0, y: 8, rotate: -10 }}
+            animate={{
+              opacity: 1,
+              y: 0,
+              rotate: 0,
+            }}
+            transition={{
+              delay: 0.4,
+              duration: 0.6,
+              type: "spring",
+              stiffness: 120,
+            }}
+            whileInView={{
+              scale: [1, 1.08, 1],
+              transition: { repeat: Infinity, duration: 2.5, ease: "easeInOut" },
+            }}
+          >
+            بال
+          </motion.span>
         </Link>
 
-        {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center space-x-6">
-          {navItems.map((item) => {
-            const active = isActive(item.href);
-            const isHovered = hovered === item.href;
-
+        {/* Links */}
+        <div className="flex items-center space-x-6">
+          {links.map(({ href, label }) => {
+            const active = pathname === href;
             return (
-              <div
-                key={item.href}
-                onMouseEnter={() => setHovered(item.href)}
-                onMouseLeave={() => setHovered(null)}
-                className="relative"
+              <Link
+                key={href}
+                href={href}
+                className={`font-medium ${
+                  active
+                    ? "text-orange-600 border-b-2 border-orange-600 pb-1"
+                    : "text-gray-700 hover:text-orange-600"
+                } transition-colors`}
               >
-                <Link
-                  href={item.href}
-                  className={`font-medium transition-colors duration-200 ${
-                    active
-                      ? "text-orange-600"
-                      : "text-gray-700 hover:text-orange-600"
-                  }`}
-                >
-                  {item.label}
-                </Link>
-
-                {/* Active underline with glow */}
-                {active && (
-                  <motion.div
-                    layoutId="nav-underline"
-                    className="absolute left-0 -bottom-1 h-[2px] w-full bg-orange-500 rounded-full shadow-[0_0_8px_2px_rgba(255,100,0,0.5)]"
-                    transition={{ type: "spring", stiffness: 350, damping: 25 }}
-                  />
-                )}
-
-                {/* Hover underline */}
-                {!active && isHovered && (
-                  <motion.div
-                    initial={{ width: 0, opacity: 0 }}
-                    animate={{ width: "100%", opacity: 1 }}
-                    exit={{ width: 0, opacity: 0 }}
-                    className="absolute left-0 -bottom-1 h-[2px] bg-orange-400 rounded-full shadow-[0_0_6px_1px_rgba(255,120,0,0.4)]"
-                    transition={{ duration: 0.25, ease: "easeOut" }}
-                  />
-                )}
-              </div>
+                {label}
+              </Link>
             );
           })}
-        </nav>
 
-        {/* Mobile Menu Toggle */}
-        <button
-          onClick={() => setIsOpen(!isOpen)}
-          className="md:hidden p-2 rounded-lg text-gray-700 hover:text-orange-500 transition-colors"
-        >
-          {isOpen ? <X size={26} /> : <Menu size={26} />}
-        </button>
+          {/* Refresh Button */}
+          {onRefresh && (
+            <Button
+              onClick={onRefresh}
+              className="ml-3 bg-orange-500 hover:bg-orange-600 text-white flex items-center gap-1"
+            >
+              <RefreshCw size={16} />
+              Refresh
+            </Button>
+          )}
+        </div>
       </div>
-
-      {/* Mobile Dropdown */}
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.25 }}
-            className="md:hidden bg-white/95 backdrop-blur-sm border-t border-orange-100 shadow-md"
-          >
-            <nav className="flex flex-col items-center py-4 space-y-3">
-              {navItems.map((item) => {
-                const active = isActive(item.href);
-                const isHovered = mobileHovered === item.href;
-
-                return (
-                  <div
-                    key={item.href}
-                    onMouseEnter={() => setMobileHovered(item.href)}
-                    onMouseLeave={() => setMobileHovered(null)}
-                    className="relative w-fit"
-                  >
-                    <Link
-                      href={item.href}
-                      onClick={() => setIsOpen(false)}
-                      className={`relative text-lg font-medium transition-colors duration-200 ${
-                        active
-                          ? "text-orange-600"
-                          : "text-gray-700 hover:text-orange-500"
-                      }`}
-                    >
-                      {item.label}
-                    </Link>
-
-                    {/* Active underline glow */}
-                    {active && (
-                      <motion.div
-                        layoutId="mobile-underline"
-                        className="absolute left-0 -bottom-1 h-[2px] w-full bg-orange-500 rounded-full shadow-[0_0_8px_2px_rgba(255,100,0,0.5)]"
-                        transition={{ duration: 0.3, ease: "easeOut" }}
-                      />
-                    )}
-
-                    {/* Hover underline for mobile */}
-                    {!active && isHovered && (
-                      <motion.div
-                        initial={{ width: 0, opacity: 0 }}
-                        animate={{ width: "100%", opacity: 1 }}
-                        exit={{ width: 0, opacity: 0 }}
-                        className="absolute left-0 -bottom-1 h-[2px] bg-orange-400 rounded-full shadow-[0_0_6px_1px_rgba(255,120,0,0.4)]"
-                        transition={{ duration: 0.25, ease: "easeOut" }}
-                      />
-                    )}
-                  </div>
-                );
-              })}
-            </nav>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </header>
+    </nav>
   );
 }

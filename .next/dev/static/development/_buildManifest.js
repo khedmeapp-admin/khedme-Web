@@ -1,9 +1,9 @@
 self.__BUILD_MANIFEST = {
+  "/": [
+    "static/chunks/pages/index.js"
+  ],
   "/admin/approve": [
     "static/chunks/pages/admin/approve.js"
-  ],
-  "/admin/login": [
-    "static/chunks/pages/admin/login.js"
   ],
   "__rewrites": {
     "afterFiles": [],
@@ -16,7 +16,7 @@ self.__BUILD_MANIFEST = {
     "/_error",
     "/admin",
     "/admin/approve",
-    "/admin/login",
+    "/admin/home",
     "/admin/provider/[id]",
     "/api/approve",
     "/api/jobs",
@@ -30,6 +30,8 @@ self.__BUILD_MANIFEST = {
     "/post-job",
     "/provider",
     "/provider/dashboard",
+    "/provider/login",
+    "/provider/profile",
     "/provider/register",
     "/verify-otp"
   ]

@@ -23,7 +23,9 @@
     "path": "/_next/image",
     "loader": "default",
     "loaderFile": "",
-    "domains": [],
+    "domains": [
+      "khedme-api.onrender.com"
+    ],
     "disableStaticImages": false,
     "minimumCacheTTL": 14400,
     "formats": [

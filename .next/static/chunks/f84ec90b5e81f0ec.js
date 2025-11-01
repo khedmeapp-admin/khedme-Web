@@ -1,7 +1,0 @@
-__turbopack_load_page_chunks__("/post-job", [
-  "static/chunks/aefc5ae740b0778e.js",
-  "static/chunks/ce306de0cdb5ba6e.js",
-  "static/chunks/9b3d960a27c62424.js",
-  "static/chunks/43de3c0f53caf891.js",
-  "static/chunks/turbopack-fc037fb5060cd99f.js"
-])

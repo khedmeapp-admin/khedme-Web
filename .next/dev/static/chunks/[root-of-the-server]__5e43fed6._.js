@@ -471,137 +471,222 @@ __turbopack_context__.s([
 ]);
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/react/jsx-dev-runtime.js [client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/react/index.js [client] (ecmascript)");
+(()=>{
+    const e = new Error("Cannot find module '@/components/ui/button'");
+    e.code = 'MODULE_NOT_FOUND';
+    throw e;
+})();
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$refresh$2d$cw$2e$js__$5b$client$5d$__$28$ecmascript$29$__$3c$export__default__as__RefreshCw$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/refresh-cw.js [client] (ecmascript) <export default as RefreshCw>");
+(()=>{
+    const e = new Error("Cannot find module '@/src/components/Navbar'");
+    e.code = 'MODULE_NOT_FOUND';
+    throw e;
+})();
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$hot$2d$toast$2f$dist$2f$index$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/react-hot-toast/dist/index.mjs [client] (ecmascript)");
 ;
 var _s = __turbopack_context__.k.signature();
 ;
 ;
+;
+;
+;
 function ProviderDashboard() {
     _s();
-    const [jobs, setJobs] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useState"])([]);
-    const [loading, setLoading] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useState"])(true);
+    const [provider, setProvider] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useState"])(null);
+    const [applications, setApplications] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useState"])([]);
+    const [loading, setLoading] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useState"])(false);
+    const [fetching, setFetching] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useState"])(true);
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useEffect"])({
         "ProviderDashboard.useEffect": ()=>{
-            const fetchJobs = {
-                "ProviderDashboard.useEffect.fetchJobs": async ()=>{
-                    try {
-                        const res = await fetch('https://khedme-api.onrender.com/api/jobs/all');
-                        const data = await res.json();
-                        setJobs(data.jobs || []);
-                    } catch (err) {
-                        __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$hot$2d$toast$2f$dist$2f$index$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__["default"].error('Failed to load jobs');
-                    } finally{
-                        setLoading(false);
-                    }
-                }
-            }["ProviderDashboard.useEffect.fetchJobs"];
-            fetchJobs();
+            const stored = localStorage.getItem("provider");
+            if (stored) {
+                setProvider(JSON.parse(stored));
+            }
         }
     }["ProviderDashboard.useEffect"], []);
-    if (loading) return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-        className: "p-10 text-center text-gray-500",
-        children: "Loading..."
-    }, void 0, false, {
-        fileName: "[project]/pages/provider/dashboard.js",
-        lineNumber: 23,
-        columnNumber: 23
-    }, this);
+    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useEffect"])({
+        "ProviderDashboard.useEffect": ()=>{
+            if (provider?.id) {
+                fetchApplications();
+            }
+        }
+    }["ProviderDashboard.useEffect"], [
+        provider
+    ]);
+    const fetchApplications = async ()=>{
+        try {
+            setLoading(true);
+            const res = await fetch(`https://khedme-api.onrender.com/api/providers/applications/${provider.id}`);
+            const data = await res.json();
+            if (data.success) setApplications(data.applications);
+        } catch (err) {
+            __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$hot$2d$toast$2f$dist$2f$index$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__["default"].error("Failed to load applications ❌");
+        } finally{
+            setLoading(false);
+            setFetching(false);
+        }
+    };
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-        className: "min-h-screen bg-gradient-to-b from-orange-50 to-white p-6",
+        className: "min-h-screen bg-gradient-to-br from-orange-50 to-white text-gray-800",
         children: [
-            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$hot$2d$toast$2f$dist$2f$index$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__["Toaster"], {
-                position: "top-center"
-            }, void 0, false, {
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(Navbar, {}, void 0, false, {
                 fileName: "[project]/pages/provider/dashboard.js",
-                lineNumber: 27,
+                lineNumber: 44,
                 columnNumber: 7
             }, this),
-            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h1", {
-                className: "text-2xl font-bold text-orange-600 mb-6",
-                children: "Provider Dashboard"
-            }, void 0, false, {
-                fileName: "[project]/pages/provider/dashboard.js",
-                lineNumber: 28,
-                columnNumber: 7
-            }, this),
-            jobs.length === 0 ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                className: "text-gray-500",
-                children: "No jobs available."
-            }, void 0, false, {
-                fileName: "[project]/pages/provider/dashboard.js",
-                lineNumber: 31,
-                columnNumber: 9
-            }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                className: "grid gap-4",
-                children: jobs.map((job)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                        className: "border border-orange-200 bg-white rounded-2xl p-4 shadow-sm",
+            " ",
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                className: "max-w-4xl mx-auto px-4 py-10",
+                children: [
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        className: "flex items-center justify-between mb-8",
                         children: [
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
-                                className: "font-semibold text-lg text-gray-800",
-                                children: job.service
-                            }, void 0, false, {
-                                fileName: "[project]/pages/provider/dashboard.js",
-                                lineNumber: 39,
-                                columnNumber: 15
-                            }, this),
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                className: "text-gray-600 text-sm",
-                                children: job.description
-                            }, void 0, false, {
-                                fileName: "[project]/pages/provider/dashboard.js",
-                                lineNumber: 40,
-                                columnNumber: 15
-                            }, this),
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                className: "text-sm text-gray-500 mt-2",
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                 children: [
-                                    "District: ",
-                                    job.district
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h1", {
+                                        className: "text-3xl font-bold text-orange-600",
+                                        children: "Provider Dashboard"
+                                    }, void 0, false, {
+                                        fileName: "[project]/pages/provider/dashboard.js",
+                                        lineNumber: 49,
+                                        columnNumber: 13
+                                    }, this),
+                                    provider && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                        className: "text-gray-600 mt-1",
+                                        children: [
+                                            "Welcome, ",
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                className: "font-semibold",
+                                                children: provider.name
+                                            }, void 0, false, {
+                                                fileName: "[project]/pages/provider/dashboard.js",
+                                                lineNumber: 54,
+                                                columnNumber: 26
+                                            }, this)
+                                        ]
+                                    }, void 0, true, {
+                                        fileName: "[project]/pages/provider/dashboard.js",
+                                        lineNumber: 53,
+                                        columnNumber: 15
+                                    }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/pages/provider/dashboard.js",
-                                lineNumber: 41,
-                                columnNumber: 15
+                                lineNumber: 48,
+                                columnNumber: 11
                             }, this),
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                className: "text-sm text-gray-500",
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(Button, {
+                                onClick: fetchApplications,
+                                disabled: loading,
+                                className: "bg-orange-500 hover:bg-orange-600 text-white flex items-center gap-2",
                                 children: [
-                                    "Budget: $",
-                                    job.budget
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$refresh$2d$cw$2e$js__$5b$client$5d$__$28$ecmascript$29$__$3c$export__default__as__RefreshCw$3e$__["RefreshCw"], {
+                                        className: `w-4 h-4 ${loading ? "animate-spin" : ""}`
+                                    }, void 0, false, {
+                                        fileName: "[project]/pages/provider/dashboard.js",
+                                        lineNumber: 64,
+                                        columnNumber: 13
+                                    }, this),
+                                    "Refresh"
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/pages/provider/dashboard.js",
-                                lineNumber: 42,
-                                columnNumber: 15
-                            }, this),
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
-                                onClick: ()=>__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$hot$2d$toast$2f$dist$2f$index$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__["default"].success(`Applied for job #${job.id}`),
-                                className: "mt-3 bg-orange-500 hover:bg-orange-600 text-white px-3 py-1 rounded transition",
-                                children: "Apply"
-                            }, void 0, false, {
-                                fileName: "[project]/pages/provider/dashboard.js",
-                                lineNumber: 43,
-                                columnNumber: 15
+                                lineNumber: 59,
+                                columnNumber: 11
                             }, this)
                         ]
-                    }, job.id, true, {
+                    }, void 0, true, {
                         fileName: "[project]/pages/provider/dashboard.js",
-                        lineNumber: 35,
-                        columnNumber: 13
-                    }, this))
-            }, void 0, false, {
+                        lineNumber: 47,
+                        columnNumber: 9
+                    }, this),
+                    fetching ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        className: "flex justify-center py-20",
+                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                            className: "animate-pulse text-gray-400",
+                            children: "Loading..."
+                        }, void 0, false, {
+                            fileName: "[project]/pages/provider/dashboard.js",
+                            lineNumber: 73,
+                            columnNumber: 13
+                        }, this)
+                    }, void 0, false, {
+                        fileName: "[project]/pages/provider/dashboard.js",
+                        lineNumber: 72,
+                        columnNumber: 11
+                    }, this) : applications.length === 0 ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                        className: "text-gray-500 text-center py-10",
+                        children: "No applications yet."
+                    }, void 0, false, {
+                        fileName: "[project]/pages/provider/dashboard.js",
+                        lineNumber: 76,
+                        columnNumber: 11
+                    }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        className: "grid gap-4",
+                        children: applications.map((app)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                className: "bg-white p-5 rounded-2xl shadow-sm border border-orange-100 hover:shadow-md transition",
+                                children: [
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
+                                        className: "text-lg font-semibold text-gray-800",
+                                        children: app.job_service
+                                    }, void 0, false, {
+                                        fileName: "[project]/pages/provider/dashboard.js",
+                                        lineNumber: 86,
+                                        columnNumber: 17
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                        className: "text-gray-500 text-sm",
+                                        children: [
+                                            app.job_district,
+                                            " • Budget: $",
+                                            app.job_budget
+                                        ]
+                                    }, void 0, true, {
+                                        fileName: "[project]/pages/provider/dashboard.js",
+                                        lineNumber: 89,
+                                        columnNumber: 17
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                        className: "mt-2 text-gray-700",
+                                        children: app.message
+                                    }, void 0, false, {
+                                        fileName: "[project]/pages/provider/dashboard.js",
+                                        lineNumber: 92,
+                                        columnNumber: 17
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                        className: `mt-3 inline-block px-3 py-1 rounded-full text-sm font-medium ${app.status === "approved" ? "bg-green-100 text-green-700" : app.status === "rejected" ? "bg-red-100 text-red-700" : "bg-yellow-100 text-yellow-700"}`,
+                                        children: app.status.charAt(0).toUpperCase() + app.status.slice(1)
+                                    }, void 0, false, {
+                                        fileName: "[project]/pages/provider/dashboard.js",
+                                        lineNumber: 93,
+                                        columnNumber: 17
+                                    }, this)
+                                ]
+                            }, app.id, true, {
+                                fileName: "[project]/pages/provider/dashboard.js",
+                                lineNumber: 82,
+                                columnNumber: 15
+                            }, this))
+                    }, void 0, false, {
+                        fileName: "[project]/pages/provider/dashboard.js",
+                        lineNumber: 80,
+                        columnNumber: 11
+                    }, this)
+                ]
+            }, void 0, true, {
                 fileName: "[project]/pages/provider/dashboard.js",
-                lineNumber: 33,
-                columnNumber: 9
+                lineNumber: 46,
+                columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/pages/provider/dashboard.js",
-        lineNumber: 26,
+        lineNumber: 43,
         columnNumber: 5
     }, this);
 }
-_s(ProviderDashboard, "xAXs/kqjedBdxYZ+TLlF70OyTQI=");
+_s(ProviderDashboard, "v8kER4yeExDhfbhWcgfP8a/7whc=");
 _c = ProviderDashboard;
 var _c;
 __turbopack_context__.k.register(_c, "ProviderDashboard");

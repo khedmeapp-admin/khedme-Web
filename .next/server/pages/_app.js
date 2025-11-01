@@ -1,6 +1,1 @@
-var R=require("../chunks/ssr/[turbopack]_runtime.js")("server/pages/_app.js")
-R.c("server/chunks/ssr/[externals]_fs_54ffce70._.js")
-R.c("server/chunks/ssr/[root-of-the-server]__77e52025._.js")
-R.c("server/chunks/ssr/[root-of-the-server]__0162dafb._.js")
-R.m(27342)
-module.exports=R.m(27342).exports
+(()=>{var a={};a.id=636,a.ids=[636],a.modules={2768:()=>{},2893:a=>{"use strict";a.exports=import("react-hot-toast")},3594:(a,b,c)=>{"use strict";c.a(a,async(a,d)=>{try{c.r(b),c.d(b,{default:()=>h});var e=c(8732);c(2768);var f=c(2893),g=a([f]);function h({Component:a,pageProps:b}){return(0,e.jsxs)(e.Fragment,{children:[(0,e.jsx)(f.Toaster,{position:"top-right",toastOptions:{style:{background:"#FF6B00",color:"#fff",borderRadius:"8px"}}}),(0,e.jsx)(a,{...b})]})}f=(g.then?(await g)():g)[0],d()}catch(a){d(a)}})},8732:a=>{"use strict";a.exports=require("react/jsx-runtime")}};var b=require("../webpack-runtime.js");b.C(a);var c=b(b.s=3594);module.exports=c})();

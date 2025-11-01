@@ -2,16 +2,13 @@
     script: typeof document === "object" ? document.currentScript : undefined,
     chunks: [
   "static/chunks/node_modules_next_dist_compiled_c629999b._.js",
-  "static/chunks/node_modules_next_dist_shared_lib_4025f6b7._.js",
-  "static/chunks/node_modules_next_dist_client_3ede7da4._.js",
-  "static/chunks/node_modules_next_dist_7fdbac9b._.js",
-  "static/chunks/node_modules_next_87234b82._.js",
+  "static/chunks/node_modules_next_dist_shared_lib_82dc2e9d._.js",
+  "static/chunks/node_modules_next_dist_client_d0aa886c._.js",
+  "static/chunks/node_modules_next_dist_6024eba3._.js",
   "static/chunks/node_modules_react-dom_4411d9bd._.js",
-  "static/chunks/node_modules_motion-dom_dist_es_01ad550f._.js",
-  "static/chunks/node_modules_framer-motion_dist_es_fab66f54._.js",
-  "static/chunks/node_modules_85fa6ef7._.js",
-  "static/chunks/[root-of-the-server]__c14c4e44._.js",
-  "static/chunks/src_styles_globals_5bb75e7e.css"
+  "static/chunks/node_modules_26250cbb._.js",
+  "static/chunks/[root-of-the-server]__01feb856._.js",
+  "static/chunks/styles_globals_dc36e6c9.css"
 ],
     source: "entry"
 });

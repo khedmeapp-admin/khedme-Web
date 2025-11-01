@@ -465,15 +465,13 @@ function triggerUpdate(msg) {
 "[project]/pages/post-job.js [client] (ecmascript)", ((__turbopack_context__) => {
 "use strict";
 
-// pages/post-job.js
 __turbopack_context__.s([
     "default",
     ()=>PostJob
 ]);
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$polyfills$2f$process$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = /*#__PURE__*/ __turbopack_context__.i("[project]/node_modules/next/dist/build/polyfills/process.js [client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/react/jsx-dev-runtime.js [client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/react/index.js [client] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$sonner$2f$dist$2f$index$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/sonner/dist/index.mjs [client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$hot$2d$toast$2f$dist$2f$index$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/react-hot-toast/dist/index.mjs [client] (ecmascript)");
 ;
 var _s = __turbopack_context__.k.signature();
 ;
@@ -481,171 +479,341 @@ var _s = __turbopack_context__.k.signature();
 function PostJob() {
     _s();
     const [form, setForm] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useState"])({
-        description: "",
+        branch: "",
         service: "",
         district: "",
+        description: "",
         budget: ""
     });
+    const [categories, setCategories] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useState"])([]);
+    const [districts, setDistricts] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useState"])([]);
     const [loading, setLoading] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useState"])(false);
-    // ✅ handle field changes
+    // ✅ Fetch meta (categories + districts)
+    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useEffect"])({
+        "PostJob.useEffect": ()=>{
+            const fetchMeta = {
+                "PostJob.useEffect.fetchMeta": async ()=>{
+                    try {
+                        const res = await fetch("https://khedme-api.onrender.com/api/meta");
+                        if (!res.ok) throw new Error("Failed to fetch");
+                        const data = await res.json();
+                        if (data.success) {
+                            setCategories(data.categories || []);
+                            setDistricts(data.districts || []);
+                        } else {
+                            __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$hot$2d$toast$2f$dist$2f$index$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__["default"].error("Failed to load data");
+                        }
+                    } catch (err) {
+                        console.error("❌ Meta fetch error:", err);
+                        __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$hot$2d$toast$2f$dist$2f$index$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__["default"].error("Could not connect to Khedme API");
+                    }
+                }
+            }["PostJob.useEffect.fetchMeta"];
+            fetchMeta();
+        }
+    }["PostJob.useEffect"], []);
     const handleChange = (e)=>{
         setForm({
             ...form,
             [e.target.name]: e.target.value
         });
     };
-    // ✅ handle form submission
     const handleSubmit = async (e)=>{
         e.preventDefault();
-        if (!form.description || !form.service || !form.district) {
-            __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$sonner$2f$dist$2f$index$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__["toast"].error("Please fill all required fields", {
-                style: {
-                    background: "#FFE4E1",
-                    color: "#E25822",
-                    border: "1px solid #E25822"
-                }
-            });
-            return;
-        }
         setLoading(true);
         try {
-            const res = await fetch(`${("TURBOPACK compile-time value", "http://localhost:4000")}/api/jobs/create`, {
+            const res = await fetch("https://khedme-api.onrender.com/api/jobs/create", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify({
-                    description: form.description,
-                    service: form.service,
-                    district: form.district,
-                    budget: form.budget || 0
-                })
+                body: JSON.stringify(form)
             });
             const data = await res.json();
-            if (!res.ok) throw new Error(data.message || "Failed to create job");
-            __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$sonner$2f$dist$2f$index$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__["toast"].success("✅ Job posted successfully!", {
-                style: {
-                    background: "#FFF2E5",
-                    color: "#E25822",
-                    border: "1px solid #E25822"
-                }
-            });
-            setForm({
-                description: "",
-                service: "",
-                district: "",
-                budget: ""
-            });
+            if (data.job) {
+                __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$hot$2d$toast$2f$dist$2f$index$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__["default"].success("Job posted successfully!");
+                setForm({
+                    branch: "",
+                    service: "",
+                    district: "",
+                    description: "",
+                    budget: ""
+                });
+            } else {
+                __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$hot$2d$toast$2f$dist$2f$index$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__["default"].error("Failed to post job");
+            }
         } catch (err) {
-            console.error("❌ Job post error:", err);
-            __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$sonner$2f$dist$2f$index$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__["toast"].error(err.message || "Something went wrong", {
-                style: {
-                    background: "#FFE4E1",
-                    color: "#E25822",
-                    border: "1px solid #E25822"
-                }
-            });
+            console.error("❌ Error posting job:", err);
+            __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$hot$2d$toast$2f$dist$2f$index$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__["default"].error("Error posting job");
         } finally{
             setLoading(false);
         }
     };
-    // ✅ UI
+    // ✅ Filter services based on selected branch
+    const filteredServices = form.branch ? categories.filter((c)=>c.branch === form.branch) : [];
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-        className: "min-h-screen bg-gradient-to-b from-orange-50 to-white flex items-center justify-center px-4",
-        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("form", {
-            onSubmit: handleSubmit,
-            className: "bg-white shadow-lg rounded-2xl p-8 w-full max-w-md border border-orange-100",
-            children: [
-                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h1", {
-                    className: "text-2xl font-semibold text-orange-600 mb-6",
-                    children: "Post a Job"
-                }, void 0, false, {
-                    fileName: "[project]/pages/post-job.js",
-                    lineNumber: 69,
-                    columnNumber: 9
-                }, this),
-                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                    className: "space-y-4",
-                    children: [
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
-                            type: "text",
-                            name: "service",
-                            placeholder: "Service (e.g., Plumbing)",
-                            value: form.service,
-                            onChange: handleChange,
-                            className: "w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-orange-400 outline-none",
-                            required: true
-                        }, void 0, false, {
-                            fileName: "[project]/pages/post-job.js",
-                            lineNumber: 72,
-                            columnNumber: 11
-                        }, this),
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
-                            type: "text",
-                            name: "district",
-                            placeholder: "District (e.g., Beirut)",
-                            value: form.district,
-                            onChange: handleChange,
-                            className: "w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-orange-400 outline-none",
-                            required: true
-                        }, void 0, false, {
-                            fileName: "[project]/pages/post-job.js",
-                            lineNumber: 82,
-                            columnNumber: 11
-                        }, this),
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
-                            type: "number",
-                            name: "budget",
-                            placeholder: "Budget (e.g., 50)",
-                            value: form.budget,
-                            onChange: handleChange,
-                            className: "w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-orange-400 outline-none"
-                        }, void 0, false, {
-                            fileName: "[project]/pages/post-job.js",
-                            lineNumber: 92,
-                            columnNumber: 11
-                        }, this),
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("textarea", {
-                            name: "description",
-                            placeholder: "Job description",
-                            value: form.description,
-                            onChange: handleChange,
-                            className: "w-full border rounded-lg px-3 py-2 h-24 focus:ring-2 focus:ring-orange-400 outline-none",
-                            required: true
-                        }, void 0, false, {
-                            fileName: "[project]/pages/post-job.js",
-                            lineNumber: 101,
-                            columnNumber: 11
-                        }, this),
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
-                            type: "submit",
-                            disabled: loading,
-                            className: "w-full bg-orange-500 hover:bg-orange-600 text-white font-medium py-2 rounded-lg transition disabled:opacity-50",
-                            children: loading ? "Posting..." : "Post Job"
-                        }, void 0, false, {
-                            fileName: "[project]/pages/post-job.js",
-                            lineNumber: 110,
-                            columnNumber: 11
-                        }, this)
-                    ]
-                }, void 0, true, {
-                    fileName: "[project]/pages/post-job.js",
-                    lineNumber: 71,
-                    columnNumber: 9
-                }, this)
-            ]
-        }, void 0, true, {
-            fileName: "[project]/pages/post-job.js",
-            lineNumber: 65,
-            columnNumber: 7
-        }, this)
-    }, void 0, false, {
+        className: "max-w-xl mx-auto p-6 bg-white rounded-2xl shadow-md mt-10",
+        children: [
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h1", {
+                className: "text-2xl font-semibold text-center text-orange-600 mb-4",
+                children: "Post a Job"
+            }, void 0, false, {
+                fileName: "[project]/pages/post-job.js",
+                lineNumber: 80,
+                columnNumber: 7
+            }, this),
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("form", {
+                onSubmit: handleSubmit,
+                className: "space-y-4",
+                children: [
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        children: [
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
+                                className: "block font-medium mb-1",
+                                children: "Main Branch"
+                            }, void 0, false, {
+                                fileName: "[project]/pages/post-job.js",
+                                lineNumber: 87,
+                                columnNumber: 11
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("select", {
+                                name: "branch",
+                                value: form.branch,
+                                onChange: (e)=>{
+                                    handleChange(e);
+                                    setForm((prev)=>({
+                                            ...prev,
+                                            service: ""
+                                        })); // reset service
+                                },
+                                className: "w-full border rounded-lg p-2",
+                                required: true,
+                                children: [
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
+                                        value: "",
+                                        children: "Select a branch"
+                                    }, void 0, false, {
+                                        fileName: "[project]/pages/post-job.js",
+                                        lineNumber: 98,
+                                        columnNumber: 13
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
+                                        value: "On-site",
+                                        children: "On-site"
+                                    }, void 0, false, {
+                                        fileName: "[project]/pages/post-job.js",
+                                        lineNumber: 99,
+                                        columnNumber: 13
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
+                                        value: "Online",
+                                        children: "Online"
+                                    }, void 0, false, {
+                                        fileName: "[project]/pages/post-job.js",
+                                        lineNumber: 100,
+                                        columnNumber: 13
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
+                                        value: "Both",
+                                        children: "Both"
+                                    }, void 0, false, {
+                                        fileName: "[project]/pages/post-job.js",
+                                        lineNumber: 101,
+                                        columnNumber: 13
+                                    }, this)
+                                ]
+                            }, void 0, true, {
+                                fileName: "[project]/pages/post-job.js",
+                                lineNumber: 88,
+                                columnNumber: 11
+                            }, this)
+                        ]
+                    }, void 0, true, {
+                        fileName: "[project]/pages/post-job.js",
+                        lineNumber: 86,
+                        columnNumber: 9
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        children: [
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
+                                className: "block font-medium mb-1",
+                                children: "Service"
+                            }, void 0, false, {
+                                fileName: "[project]/pages/post-job.js",
+                                lineNumber: 107,
+                                columnNumber: 11
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("select", {
+                                name: "service",
+                                value: form.service,
+                                onChange: handleChange,
+                                className: "w-full border rounded-lg p-2",
+                                required: true,
+                                disabled: !form.branch,
+                                children: [
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
+                                        value: "",
+                                        children: form.branch ? "Select a service" : "Select a branch first"
+                                    }, void 0, false, {
+                                        fileName: "[project]/pages/post-job.js",
+                                        lineNumber: 116,
+                                        columnNumber: 13
+                                    }, this),
+                                    filteredServices.map((cat)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
+                                            value: cat.name,
+                                            children: [
+                                                cat.name,
+                                                " — ",
+                                                cat.name_ar
+                                            ]
+                                        }, cat.id, true, {
+                                            fileName: "[project]/pages/post-job.js",
+                                            lineNumber: 120,
+                                            columnNumber: 15
+                                        }, this))
+                                ]
+                            }, void 0, true, {
+                                fileName: "[project]/pages/post-job.js",
+                                lineNumber: 108,
+                                columnNumber: 11
+                            }, this)
+                        ]
+                    }, void 0, true, {
+                        fileName: "[project]/pages/post-job.js",
+                        lineNumber: 106,
+                        columnNumber: 9
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        children: [
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
+                                className: "block font-medium mb-1",
+                                children: "District"
+                            }, void 0, false, {
+                                fileName: "[project]/pages/post-job.js",
+                                lineNumber: 129,
+                                columnNumber: 11
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("select", {
+                                name: "district",
+                                value: form.district,
+                                onChange: handleChange,
+                                className: "w-full border rounded-lg p-2",
+                                required: true,
+                                children: [
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
+                                        value: "",
+                                        children: "Select a district"
+                                    }, void 0, false, {
+                                        fileName: "[project]/pages/post-job.js",
+                                        lineNumber: 137,
+                                        columnNumber: 13
+                                    }, this),
+                                    districts.map((d)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
+                                            value: d.name,
+                                            children: [
+                                                d.name,
+                                                " — ",
+                                                d.name_ar
+                                            ]
+                                        }, d.id, true, {
+                                            fileName: "[project]/pages/post-job.js",
+                                            lineNumber: 139,
+                                            columnNumber: 15
+                                        }, this))
+                                ]
+                            }, void 0, true, {
+                                fileName: "[project]/pages/post-job.js",
+                                lineNumber: 130,
+                                columnNumber: 11
+                            }, this)
+                        ]
+                    }, void 0, true, {
+                        fileName: "[project]/pages/post-job.js",
+                        lineNumber: 128,
+                        columnNumber: 9
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        children: [
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
+                                className: "block font-medium mb-1",
+                                children: "Description"
+                            }, void 0, false, {
+                                fileName: "[project]/pages/post-job.js",
+                                lineNumber: 148,
+                                columnNumber: 11
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("textarea", {
+                                name: "description",
+                                value: form.description,
+                                onChange: handleChange,
+                                placeholder: "Describe the task...",
+                                className: "w-full border rounded-lg p-2",
+                                rows: 3,
+                                required: true
+                            }, void 0, false, {
+                                fileName: "[project]/pages/post-job.js",
+                                lineNumber: 149,
+                                columnNumber: 11
+                            }, this)
+                        ]
+                    }, void 0, true, {
+                        fileName: "[project]/pages/post-job.js",
+                        lineNumber: 147,
+                        columnNumber: 9
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        children: [
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
+                                className: "block font-medium mb-1",
+                                children: "Budget (USD)"
+                            }, void 0, false, {
+                                fileName: "[project]/pages/post-job.js",
+                                lineNumber: 162,
+                                columnNumber: 11
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
+                                type: "number",
+                                name: "budget",
+                                value: form.budget,
+                                onChange: handleChange,
+                                placeholder: "e.g. 50",
+                                className: "w-full border rounded-lg p-2",
+                                required: true
+                            }, void 0, false, {
+                                fileName: "[project]/pages/post-job.js",
+                                lineNumber: 163,
+                                columnNumber: 11
+                            }, this)
+                        ]
+                    }, void 0, true, {
+                        fileName: "[project]/pages/post-job.js",
+                        lineNumber: 161,
+                        columnNumber: 9
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                        type: "submit",
+                        disabled: loading,
+                        className: "w-full bg-orange-500 hover:bg-orange-600 text-white py-2 rounded-lg transition",
+                        children: loading ? "Posting..." : "Post Job"
+                    }, void 0, false, {
+                        fileName: "[project]/pages/post-job.js",
+                        lineNumber: 175,
+                        columnNumber: 9
+                    }, this)
+                ]
+            }, void 0, true, {
+                fileName: "[project]/pages/post-job.js",
+                lineNumber: 84,
+                columnNumber: 7
+            }, this)
+        ]
+    }, void 0, true, {
         fileName: "[project]/pages/post-job.js",
-        lineNumber: 64,
+        lineNumber: 79,
         columnNumber: 5
     }, this);
 }
-_s(PostJob, "Lm9zmdtIrRbycw1Ln73bSmHEeiA=");
+_s(PostJob, "iEoCSEfAB8dntqHLfzWSb9gy+CU=");
 _c = PostJob;
 var _c;
 __turbopack_context__.k.register(_c, "PostJob");

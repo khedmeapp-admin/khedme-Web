@@ -19,7 +19,32 @@
     "afterFiles": [],
     "fallback": []
   },
-  "dynamicRoutes": [],
+  "dynamicRoutes": [
+    {
+      "page": "/admin/provider/[id]",
+      "regex": "^/admin/provider/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPid": "nxtPid"
+      },
+      "namedRegex": "^/admin/provider/(?<nxtPid>[^/]+?)(?:/)?$"
+    },
+    {
+      "page": "/jobs/[id]",
+      "regex": "^/jobs/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPid": "nxtPid"
+      },
+      "namedRegex": "^/jobs/(?<nxtPid>[^/]+?)(?:/)?$"
+    },
+    {
+      "page": "/jobs/[id]/applications",
+      "regex": "^/jobs/([^/]+?)/applications(?:/)?$",
+      "routeKeys": {
+        "nxtPid": "nxtPid"
+      },
+      "namedRegex": "^/jobs/(?<nxtPid>[^/]+?)/applications(?:/)?$"
+    }
+  ],
   "staticRoutes": [
     {
       "page": "/",
@@ -64,6 +89,12 @@
       "namedRegex": "^/api/providers/pending(?:/)?$"
     },
     {
+      "page": "/auth",
+      "regex": "^/auth(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/auth(?:/)?$"
+    },
+    {
       "page": "/email-confirmed",
       "regex": "^/email\\-confirmed(?:/)?$",
       "routeKeys": {},
@@ -82,10 +113,22 @@
       "namedRegex": "^/post\\-job(?:/)?$"
     },
     {
+      "page": "/provider",
+      "regex": "^/provider(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/provider(?:/)?$"
+    },
+    {
       "page": "/provider/register",
       "regex": "^/provider/register(?:/)?$",
       "routeKeys": {},
       "namedRegex": "^/provider/register(?:/)?$"
+    },
+    {
+      "page": "/verify-otp",
+      "regex": "^/verify\\-otp(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/verify\\-otp(?:/)?$"
     }
   ],
   "dataRoutes": [],
