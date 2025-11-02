@@ -2,25 +2,22 @@
 const nextConfig = {
   reactStrictMode: true,
 
-  // 👇 This tells Vercel that your pages are inside src/
-  experimental: {
-    appDir: false,
-  },
+  output: 'standalone',
 
   images: {
-    domains: ["khedme-api.onrender.com"],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'khedme-api.onrender.com',
+      },
+    ],
   },
 
   typescript: {
     ignoreBuildErrors: true,
   },
 
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
-
-  // 👇 Optional: fallback if using custom structure
-  pageExtensions: ["js", "jsx"],
+  pageExtensions: ['js', 'jsx'],
 };
 
 export default nextConfig;
