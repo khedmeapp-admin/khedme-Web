@@ -43,7 +43,9 @@
       "path": "/_next/image",
       "loader": "default",
       "loaderFile": "",
-      "domains": [],
+      "domains": [
+        "khedme-api.onrender.com"
+      ],
       "disableStaticImages": false,
       "minimumCacheTTL": 14400,
       "formats": [
@@ -60,12 +62,7 @@
           "search": ""
         }
       ],
-      "remotePatterns": [
-        {
-          "protocol": "https",
-          "hostname": "khedme-api.onrender.com"
-        }
-      ],
+      "remotePatterns": [],
       "qualities": [
         75
       ],
@@ -94,7 +91,6 @@
     "compiler": {},
     "expireTime": 31536000,
     "staticPageGenerationTimeout": 60,
-    "output": "standalone",
     "modularizeImports": {
       "@mui/icons-material": {
         "transform": "@mui/icons-material/{{member}}"
@@ -210,6 +206,7 @@
       "proxyClientMaxBodySize": 10485760,
       "hideLogsAfterAbort": false,
       "mcpServer": true,
+      "appDir": false,
       "optimizePackageImports": [
         "lucide-react",
         "date-fns",
@@ -293,9 +290,6 @@
     "htmlLimitedBots": "[\\w-]+-Google|Google-[\\w-]+|Chrome-Lighthouse|Slurp|DuckDuckBot|baiduspider|yandex|sogou|bitlybot|tumblr|vkShare|quora link preview|redditbot|ia_archiver|Bingbot|BingPreview|applebot|facebookexternalhit|facebookcatalog|Twitterbot|LinkedInBot|Slackbot|Discordbot|WhatsApp|SkypeUriPreview|Yeti|googleweblight",
     "bundlePagesRouterDependencies": false,
     "configFileName": "next.config.mjs",
-    "eslint": {
-      "ignoreDuringBuilds": true
-    },
     "turbopack": {
       "root": "D:\\Khedme\\Khedme-Web"
     },

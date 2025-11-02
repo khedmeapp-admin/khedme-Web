@@ -23,7 +23,9 @@
     "path": "/_next/image",
     "loader": "default",
     "loaderFile": "",
-    "domains": [],
+    "domains": [
+      "khedme-api.onrender.com"
+    ],
     "disableStaticImages": false,
     "minimumCacheTTL": 14400,
     "formats": [
@@ -40,13 +42,7 @@
         "search": ""
       }
     ],
-    "remotePatterns": [
-      {
-        "protocol": "https",
-        "hostname": "^(?:^(?:khedme\\-api\\.onrender\\.com)$)$",
-        "pathname": "^(?:(?!(?:^|\\/)\\.{1,2}(?:\\/|$))(?:(?:(?!(?:^|\\/)\\.{1,2}(?:\\/|$)).)*?)\\/?)$"
-      }
-    ],
+    "remotePatterns": [],
     "qualities": [
       75
     ],
