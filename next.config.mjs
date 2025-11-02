@@ -3,7 +3,7 @@
 const nextConfig = {
   reactStrictMode: true,
 
-  // ✅ Make sure Vercel recognizes src/pages
+  // Ensure Vercel uses the src/pages directory correctly
   pageExtensions: ["js", "jsx", "ts", "tsx"],
 
   images: {
