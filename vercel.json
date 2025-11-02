@@ -1,15 +1,9 @@
 {
   "version": 2,
   "builds": [
-    {
-      "src": "src/pages/**/*.js",
-      "use": "@vercel/next"
-    }
+    { "src": "package.json", "use": "@vercel/next" }
   ],
   "routes": [
-    {
-      "src": "/(.*)",
-      "dest": "/src/pages/$1"
-    }
+    { "src": "/(.*)", "dest": "/$1" }
   ]
 }
