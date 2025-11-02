@@ -22,13 +22,19 @@ export default function VerifyOtp() {
       const data = await res.json();
       if (!res.ok) throw new Error(data.message || "Invalid OTP");
 
-      toast.success("OTP verified successfully 🎉");
+      // ✅ Save provider info for dashboard access
+      if (data.provider) {
+        localStorage.setItem("provider", JSON.stringify(data.provider));
+      } else {
+        // fallback if backend doesn’t send provider yet
+        localStorage.setItem(
+          "provider",
+          JSON.stringify({ id: 1, name: "Demo Provider", phone })
+        );
+      }
 
-      // Save session temporarily (later we’ll use cookies)
-      localStorage.setItem("userPhone", phone);
-      localStorage.setItem("userRole", data.role || "provider");
-
-      router.push("/"); // redirect to home or dashboard
+      toast.success("Login successful ✅");
+      router.push("/provider/dashboard"); // ✅ Go straight to provider dashboard
     } catch (err) {
       toast.error(err.message);
     } finally {
@@ -39,9 +45,12 @@ export default function VerifyOtp() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-orange-600 to-black">
       <div className="bg-white/10 p-8 rounded-2xl backdrop-blur-md shadow-lg w-96">
-        <h1 className="text-center text-white text-xl font-bold mb-6">Verify OTP</h1>
+        <h1 className="text-center text-white text-xl font-bold mb-6">
+          Verify OTP
+        </h1>
         <p className="text-sm text-orange-200 text-center mb-4">
-          Enter the 6-digit code sent to <span className="font-semibold">{phone}</span>
+          Enter the 6-digit code sent to{" "}
+          <span className="font-semibold">{phone}</span>
         </p>
 
         <input

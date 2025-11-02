@@ -40,7 +40,7 @@ function ProviderDashboard() {
     (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react__$5b$external$5d$__$28$react$2c$__cjs$29$__["useEffect"])(()=>{
         if (!provider) return;
         setLoading(true);
-        fetch(`${("TURBOPACK compile-time value", "https://khedme-api.onrender.com")}/api/jobs/all`).then((res)=>res.json()).then((data)=>{
+        fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/jobs/all`).then((res)=>res.json()).then((data)=>{
             setJobs(data.jobs || []);
             setLoading(false);
         }).catch(()=>{
@@ -55,7 +55,7 @@ function ProviderDashboard() {
         if (!provider) return;
         setLoading(true);
         try {
-            const res = await fetch(`${("TURBOPACK compile-time value", "https://khedme-api.onrender.com")}/api/providers/applications/${provider.id}`);
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/providers/applications/${provider.id}`);
             const data = await res.json();
             if (data.success) setApplications(data.applications || []);
             else __TURBOPACK__imported__module__$5b$externals$5d2f$react$2d$hot$2d$toast__$5b$external$5d$__$28$react$2d$hot$2d$toast$2c$__esm_import$29$__["default"].error("Failed to fetch applications");
@@ -75,7 +75,7 @@ function ProviderDashboard() {
         const message = prompt("Enter a short message for your application:");
         if (!message) return;
         try {
-            const res = await fetch(`${("TURBOPACK compile-time value", "https://khedme-api.onrender.com")}/api/providers/apply`, {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/providers/apply`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"

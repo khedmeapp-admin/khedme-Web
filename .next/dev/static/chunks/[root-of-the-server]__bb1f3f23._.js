@@ -497,6 +497,7 @@ __turbopack_context__.s([
     "default",
     ()=>ProviderDashboard
 ]);
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$polyfills$2f$process$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = /*#__PURE__*/ __turbopack_context__.i("[project]/node_modules/next/dist/build/polyfills/process.js [client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/react/jsx-dev-runtime.js [client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/react/index.js [client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$button$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/components/ui/button.js [client] (ecmascript)");
@@ -534,13 +535,20 @@ function ProviderDashboard() {
         provider
     ]);
     const fetchApplications = async ()=>{
+        if (!provider?.id) return;
         try {
             setLoading(true);
-            const res = await fetch(`https://khedme-api.onrender.com/api/providers/applications/${provider.id}`);
+            const res = await fetch(`${("TURBOPACK compile-time value", "https://khedme-api.onrender.com")}/api/providers/applications/${provider.id}`);
+            if (!res.ok) throw new Error("Network error");
             const data = await res.json();
-            if (data.success) setApplications(data.applications);
+            if (data.success) {
+                setApplications(data.applications || []);
+            } else {
+                __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$hot$2d$toast$2f$dist$2f$index$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__["default"].error("Failed to load applications ❌");
+            }
         } catch (err) {
-            __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$hot$2d$toast$2f$dist$2f$index$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__["default"].error("Failed to load applications ❌");
+            console.error("❌ Error fetching applications:", err);
+            __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$hot$2d$toast$2f$dist$2f$index$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__["default"].error("Failed to connect to server ❌");
         } finally{
             setLoading(false);
             setFetching(false);
@@ -561,31 +569,32 @@ function ProviderDashboard() {
                                     children: "Provider Dashboard"
                                 }, void 0, false, {
                                     fileName: "[project]/src/pages/provider/dashboard.js",
-                                    lineNumber: 48,
+                                    lineNumber: 60,
                                     columnNumber: 13
                                 }, this),
                                 provider && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                                     className: "text-gray-600 mt-1",
                                     children: [
-                                        "Welcome, ",
+                                        "Welcome,",
+                                        " ",
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                             className: "font-semibold",
-                                            children: provider.name
+                                            children: provider.name || provider.full_name
                                         }, void 0, false, {
                                             fileName: "[project]/src/pages/provider/dashboard.js",
-                                            lineNumber: 53,
-                                            columnNumber: 26
+                                            lineNumber: 66,
+                                            columnNumber: 17
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/pages/provider/dashboard.js",
-                                    lineNumber: 52,
+                                    lineNumber: 64,
                                     columnNumber: 15
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/pages/provider/dashboard.js",
-                            lineNumber: 47,
+                            lineNumber: 59,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$button$2e$js__$5b$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -597,20 +606,20 @@ function ProviderDashboard() {
                                     className: `w-4 h-4 ${loading ? "animate-spin" : ""}`
                                 }, void 0, false, {
                                     fileName: "[project]/src/pages/provider/dashboard.js",
-                                    lineNumber: 63,
+                                    lineNumber: 78,
                                     columnNumber: 13
                                 }, this),
                                 "Refresh"
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/pages/provider/dashboard.js",
-                            lineNumber: 58,
+                            lineNumber: 73,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/pages/provider/dashboard.js",
-                    lineNumber: 46,
+                    lineNumber: 58,
                     columnNumber: 9
                 }, this),
                 fetching ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -620,19 +629,19 @@ function ProviderDashboard() {
                         children: "Loading..."
                     }, void 0, false, {
                         fileName: "[project]/src/pages/provider/dashboard.js",
-                        lineNumber: 72,
+                        lineNumber: 86,
                         columnNumber: 13
                     }, this)
                 }, void 0, false, {
                     fileName: "[project]/src/pages/provider/dashboard.js",
-                    lineNumber: 71,
+                    lineNumber: 85,
                     columnNumber: 11
                 }, this) : applications.length === 0 ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                     className: "text-gray-500 text-center py-10",
                     children: "No applications yet."
                 }, void 0, false, {
                     fileName: "[project]/src/pages/provider/dashboard.js",
-                    lineNumber: 75,
+                    lineNumber: 89,
                     columnNumber: 11
                 }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                     className: "grid gap-4",
@@ -641,60 +650,60 @@ function ProviderDashboard() {
                             children: [
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
                                     className: "text-lg font-semibold text-gray-800",
-                                    children: app.job_service
+                                    children: app.service || app.job_service || "Untitled Job"
                                 }, void 0, false, {
                                     fileName: "[project]/src/pages/provider/dashboard.js",
-                                    lineNumber: 85,
+                                    lineNumber: 99,
                                     columnNumber: 17
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                                     className: "text-gray-500 text-sm",
                                     children: [
-                                        app.job_district,
+                                        app.district || app.job_district,
                                         " • Budget: $",
-                                        app.job_budget
+                                        app.budget || app.job_budget
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/pages/provider/dashboard.js",
-                                    lineNumber: 88,
+                                    lineNumber: 102,
                                     columnNumber: 17
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                                     className: "mt-2 text-gray-700",
-                                    children: app.message
+                                    children: app.message || "No message provided."
                                 }, void 0, false, {
                                     fileName: "[project]/src/pages/provider/dashboard.js",
-                                    lineNumber: 91,
+                                    lineNumber: 106,
                                     columnNumber: 17
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                                     className: `mt-3 inline-block px-3 py-1 rounded-full text-sm font-medium ${app.status === "approved" ? "bg-green-100 text-green-700" : app.status === "rejected" ? "bg-red-100 text-red-700" : "bg-yellow-100 text-yellow-700"}`,
-                                    children: app.status.charAt(0).toUpperCase() + app.status.slice(1)
+                                    children: app.status ? app.status.charAt(0).toUpperCase() + app.status.slice(1) : "Pending"
                                 }, void 0, false, {
                                     fileName: "[project]/src/pages/provider/dashboard.js",
-                                    lineNumber: 92,
+                                    lineNumber: 109,
                                     columnNumber: 17
                                 }, this)
                             ]
-                        }, app.id, true, {
+                        }, app.application_id || app.id, true, {
                             fileName: "[project]/src/pages/provider/dashboard.js",
-                            lineNumber: 81,
+                            lineNumber: 95,
                             columnNumber: 15
                         }, this))
                 }, void 0, false, {
                     fileName: "[project]/src/pages/provider/dashboard.js",
-                    lineNumber: 79,
+                    lineNumber: 93,
                     columnNumber: 11
                 }, this)
             ]
         }, void 0, true, {
             fileName: "[project]/src/pages/provider/dashboard.js",
-            lineNumber: 45,
+            lineNumber: 56,
             columnNumber: 7
         }, this)
     }, void 0, false, {
         fileName: "[project]/src/pages/provider/dashboard.js",
-        lineNumber: 44,
+        lineNumber: 55,
         columnNumber: 5
     }, this);
 }

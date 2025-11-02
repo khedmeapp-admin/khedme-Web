@@ -503,7 +503,7 @@ function ProviderDashboard() {
         "ProviderDashboard.useEffect": ()=>{
             if (!provider) return;
             setLoading(true);
-            fetch(`${("TURBOPACK compile-time value", "https://khedme-api.onrender.com")}/api/jobs/all`).then({
+            fetch(`${__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$polyfills$2f$process$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"].env.NEXT_PUBLIC_API_URL}/api/jobs/all`).then({
                 "ProviderDashboard.useEffect": (res)=>res.json()
             }["ProviderDashboard.useEffect"]).then({
                 "ProviderDashboard.useEffect": (data)=>{
@@ -525,7 +525,7 @@ function ProviderDashboard() {
         if (!provider) return;
         setLoading(true);
         try {
-            const res = await fetch(`${("TURBOPACK compile-time value", "https://khedme-api.onrender.com")}/api/providers/applications/${provider.id}`);
+            const res = await fetch(`${__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$polyfills$2f$process$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"].env.NEXT_PUBLIC_API_URL}/api/providers/applications/${provider.id}`);
             const data = await res.json();
             if (data.success) setApplications(data.applications || []);
             else __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$hot$2d$toast$2f$dist$2f$index$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__["default"].error("Failed to fetch applications");
@@ -547,7 +547,7 @@ function ProviderDashboard() {
         const message = prompt("Enter a short message for your application:");
         if (!message) return;
         try {
-            const res = await fetch(`${("TURBOPACK compile-time value", "https://khedme-api.onrender.com")}/api/providers/apply`, {
+            const res = await fetch(`${__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$polyfills$2f$process$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"].env.NEXT_PUBLIC_API_URL}/api/providers/apply`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"

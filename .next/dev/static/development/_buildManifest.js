@@ -1,4 +1,7 @@
 self.__BUILD_MANIFEST = {
+  "/provider": [
+    "static/chunks/pages/provider.js"
+  ],
   "__rewrites": {
     "afterFiles": [],
     "beforeFiles": [],
