@@ -1,5 +1,9 @@
 {
-  "buildCommand": "next build",
-  "outputDirectory": ".next",
-  "framework": "nextjs"
+  "version": 2,
+  "builds": [
+    { "src": "src/next.config.mjs", "use": "@vercel/next" }
+  ],
+  "routes": [
+    { "src": "/(.*)", "dest": "src/$1" }
+  ]
 }
