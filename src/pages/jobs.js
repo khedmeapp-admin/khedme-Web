@@ -1,121 +1,162 @@
-// pages/jobs.js
+// src/pages/jobs.js
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
 export default function JobsPage() {
-  // ✅ Ensure API_BASE does NOT include /api at the end
-  const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
-
+  const API_BASE = "https://khedme-api.onrender.com";
   const [jobs, setJobs] = useState([]);
+  const [provider, setProvider] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [applying, setApplying] = useState({}); // { jobId: boolean }
+  const [applying, setApplying] = useState({}); // Track which job is being applied to
 
-  // 🔸 Load all jobs on mount
+  /* ---------------------------------------------------
+     ✅ Load provider from localStorage
+  --------------------------------------------------- */
   useEffect(() => {
-    const load = async () => {
+    const stored = localStorage.getItem("provider");
+    if (stored) {
       try {
-        const res = await fetch(`${API_BASE}/api/jobs/all`);
-        if (!res.ok) throw new Error("Failed to fetch jobs");
-        const data = await res.json();
-        setJobs(data.jobs || []);
-      } catch (err) {
-        console.error("Job load error:", err);
-        toast.error("Failed to load jobs");
-      } finally {
-        setLoading(false);
+        const parsed = JSON.parse(stored);
+        setProvider(parsed);
+      } catch {
+        console.error("Failed to parse provider data");
       }
-    };
-    load();
+    }
   }, []);
 
-  // 🔸 Apply for a job
-  const handleApply = async (jobId) => {
-    // TODO: replace provider_id with real logged-in provider ID once auth is integrated
-    const providerId = 1;
-    const message = "Hello — I can take this job.";
-
-    setApplying((s) => ({ ...s, [jobId]: true }));
+  /* ---------------------------------------------------
+     ✅ Fetch Jobs
+  --------------------------------------------------- */
+  const fetchJobs = async () => {
+    setLoading(true);
     try {
-      const res = await fetch(`${API_BASE}/api/jobs/apply`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ job_id: jobId, provider_id: providerId, message }),
-      });
-
+      const res = await fetch(`${API_BASE}/api/jobs/all`);
       const data = await res.json();
-      if (!res.ok) throw new Error(data.error || "Failed to apply");
-      toast.success("Application sent ✅");
+
+      if (data.success) setJobs(data.jobs);
+      else toast.error("Failed to load jobs");
     } catch (err) {
-      console.error("Apply error:", err);
-      toast.error(err.message || "Error applying");
+      console.error("❌ Error fetching jobs:", err);
+      toast.error("Error loading jobs");
     } finally {
-      setApplying((s) => ({ ...s, [jobId]: false }));
+      setLoading(false);
     }
   };
 
-  // 🔸 Render UI
+  useEffect(() => {
+    fetchJobs();
+  }, []);
+
+  /* ---------------------------------------------------
+     ✅ Apply for a Job (with duplicate prevention)
+  --------------------------------------------------- */
+  const handleApply = async (jobId) => {
+    if (!provider) {
+      toast.error("Please log in as a provider first");
+      return;
+    }
+
+    setApplying((prev) => ({ ...prev, [jobId]: true }));
+
+    try {
+      const res = await fetch(`${API_BASE}/api/providers/apply`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          job_id: jobId,
+          provider_id: provider.id,
+          message: "I'd like to take this job.",
+        }),
+      });
+
+      const data = await res.json();
+
+      if (data.success) {
+        toast.success("Application submitted ✅");
+        // Mark job as applied locally
+        setJobs((prev) =>
+          prev.map((job) =>
+            job.id === jobId ? { ...job, applied: true } : job
+          )
+        );
+      } else {
+        toast.error(data.message || "Already applied ❗");
+      }
+    } catch (err) {
+      console.error("❌ Apply error:", err);
+      toast.error("Server error while applying");
+    } finally {
+      setApplying((prev) => ({ ...prev, [jobId]: false }));
+    }
+  };
+
+  /* ---------------------------------------------------
+     🧱 UI
+  --------------------------------------------------- */
+  if (loading)
+    return (
+      <div className="flex justify-center items-center min-h-screen text-gray-500">
+        Loading jobs...
+      </div>
+    );
+
   return (
-    <div className="min-h-screen bg-gray-50 p-6">
-      <div className="max-w-5xl mx-auto">
-        <h1 className="text-3xl font-bold text-orange-600 mb-6">Open Jobs</h1>
+    <div className="max-w-4xl mx-auto p-6">
+      <h1 className="text-3xl font-bold text-orange-600 mb-6 text-center">
+        Available Jobs
+      </h1>
 
-        {loading ? (
-          <p className="text-gray-500">Loading jobs…</p>
-        ) : jobs.length === 0 ? (
-          <p className="text-gray-500">No jobs posted yet.</p>
-        ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {jobs.map((job) => (
-              <div
-                key={job.id}
-                className="bg-white p-5 rounded-2xl shadow-sm border border-orange-50"
-              >
-                <div className="flex justify-between items-start">
-                  <div>
-                    <h2 className="text-xl font-semibold">
-                      {job.service || "Service"}
-                    </h2>
-                    <p className="text-sm text-gray-600 mt-1">
-                      {job.description}
-                    </p>
-                    <p className="text-sm text-gray-500 mt-2">
-                      District:{" "}
-                      <span className="font-medium">
-                        {job.district || "—"}
-                      </span>
-                    </p>
-                  </div>
-                  <div className="text-right">
-                    <div className="text-lg font-bold text-orange-600">
-                      ${job.budget || "—"}
-                    </div>
-                    <div className="text-sm text-gray-400">
-                      Posted:{" "}
-                      {job.created_at
-                        ? new Date(job.created_at).toLocaleDateString()
-                        : "—"}
-                    </div>
-                  </div>
-                </div>
+      {jobs.length === 0 ? (
+        <p className="text-center text-gray-500">No jobs posted yet.</p>
+      ) : (
+        <div className="grid gap-4">
+          {jobs.map((job) => (
+            <div
+              key={job.id}
+              className="bg-white rounded-2xl p-5 shadow-md border border-orange-100 hover:shadow-lg transition"
+            >
+              <h2 className="text-lg font-semibold text-gray-800">
+                {job.service}
+              </h2>
+              <p className="text-sm text-gray-500 mb-1">
+                {job.district} • Budget: ${job.budget}
+              </p>
+              <p className="text-gray-700 mb-4">{job.description}</p>
 
-                <div className="mt-4">
+              <div className="flex items-center justify-between">
+                <span
+                  className={`px-3 py-1 rounded-full text-sm font-medium ${
+                    job.status === "pending"
+                      ? "bg-yellow-100 text-yellow-700"
+                      : job.status === "approved"
+                      ? "bg-green-100 text-green-700"
+                      : "bg-gray-200 text-gray-600"
+                  }`}
+                >
+                  {job.status}
+                </span>
+
+                {job.applied ? (
                   <button
-                    disabled={!!applying[job.id]}
+                    disabled
+                    className="bg-green-500 text-white px-4 py-2 rounded-lg cursor-default"
+                  >
+                    ✅ Applied
+                  </button>
+                ) : (
+                  <button
                     onClick={() => handleApply(job.id)}
-                    className={`w-full rounded-xl py-2 font-medium transition ${
-                      applying[job.id]
-                        ? "bg-gray-300 text-gray-700 cursor-not-allowed"
-                        : "bg-orange-500 hover:bg-orange-600 text-white"
-                    }`}
+                    disabled={applying[job.id]}
+                    className="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-lg transition disabled:opacity-50"
                   >
                     {applying[job.id] ? "Applying..." : "Apply Now"}
                   </button>
-                </div>
+                )}
               </div>
-            ))}
-          </div>
-        )}
-      </div>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }
