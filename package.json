@@ -25,9 +25,18 @@
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.1.16",
+    "@types/istanbul-lib-coverage": "^2.0.6",
+    "@types/istanbul-lib-report": "^3.0.3",
+    "@types/istanbul-reports": "^3.0.4",
+    "@types/node": "^24.10.0",
+    "@types/react": "19.2.2",
+    "@types/yargs": "^17.0.34",
+    "@types/yargs-parser": "^21.0.3",
     "autoprefixer": "^10.4.21",
+    "case-sensitive-paths-webpack-plugin": "^2.4.0",
     "cross-env": "^10.1.0",
     "postcss": "^8.5.6",
-    "tailwindcss": "^3.4.13"
+    "tailwindcss": "^3.4.13",
+    "typescript": "5.9.3"
   }
 }

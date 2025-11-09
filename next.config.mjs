@@ -1,10 +1,17 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  experimental: { appDir: false },
-  pageExtensions: ["js", "jsx"],
-  images: { domains: ["khedme-api.onrender.com"] },
-  typescript: { ignoreBuildErrors: true },
+  pageExtensions: ["js", "jsx"], // Only JS/JSX files
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "khedme-api.onrender.com",
+        port: "",
+        pathname: "/**",
+      },
+    ],
+  },
 };
 
 export default nextConfig;

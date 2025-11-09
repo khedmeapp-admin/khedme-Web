@@ -1,6 +1,0 @@
-{
-  "version": 3,
-  "sources": [],
-  "sections": [
-    {"offset": {"line": 22, "column": 0}, "map": {"version":3,"sources":["file:///D:/Khedme/Khedme-Web/src/pages/_app.js"],"sourcesContent":["// src/pages/_app.js\r\nimport \"@/styles/globals.css\";\r\nimport { ThemeProvider } from \"next-themes\";\r\n\r\nexport default function App({ Component, pageProps, router }) {\r\n  const isAdminPage = router.pathname.startsWith(\"/admin\");\r\n\r\n  if (isAdminPage) {\r\n    // Apply dark/light theme toggle only to admin pages\r\n    return (\r\n      <ThemeProvider attribute=\"class\" defaultTheme=\"light\">\r\n        <Component {...pageProps} />\r\n      </ThemeProvider>\r\n    );\r\n  }\r\n\r\n  // All other pages use your original look (no dark theme)\r\n  return <Component {...pageProps} />;\r\n}\r\n"],"names":[],"mappings":"AAAA,oBAAoB;;;;;;AAEpB;;;;;;;;AAEe,SAAS,IAAI,EAAE,SAAS,EAAE,SAAS,EAAE,MAAM,EAAE;IAC1D,MAAM,cAAc,OAAO,QAAQ,CAAC,UAAU,CAAC;IAE/C,IAAI,aAAa;QACf,oDAAoD;QACpD,qBACE,qKAAC,6IAAa;YAAC,WAAU;YAAQ,cAAa;sBAC5C,cAAA,qKAAC;gBAAW,GAAG,SAAS;;;;;;;;;;;IAG9B;IAEA,yDAAyD;IACzD,qBAAO,qKAAC;QAAW,GAAG,SAAS;;;;;;AACjC","debugId":null}}]
-}

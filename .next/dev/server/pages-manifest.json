@@ -1,7 +1,0 @@
-{
-  "/": "pages/index.js",
-  "/_app": "pages/_app.js",
-  "/_document": "pages/_document.js",
-  "/admin/approve": "pages/admin/approve.js",
-  "/provider": "pages/provider.js"
-}
