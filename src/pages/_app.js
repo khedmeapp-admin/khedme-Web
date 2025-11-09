@@ -1,24 +1,19 @@
+// src/pages/_app.js
 import "@/styles/globals.css";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
-import { Toaster } from "react-hot-toast";
-import { useRouter } from "next/router";
+import { ThemeProvider } from "next-themes";
 
-export default function App({ Component, pageProps }) {
-  const router = useRouter();
+export default function App({ Component, pageProps, router }) {
   const isAdminPage = router.pathname.startsWith("/admin");
 
-  return (
-    <>
-      {/* Show Navbar & Footer only on non-admin pages */}
-      {!isAdminPage && <Navbar />}
-      <Toaster position="top-center" />
-
-      <main className="min-h-screen">
+  if (isAdminPage) {
+    // Apply dark/light theme toggle only to admin pages
+    return (
+      <ThemeProvider attribute="class" defaultTheme="light">
         <Component {...pageProps} />
-      </main>
+      </ThemeProvider>
+    );
+  }
 
-      {!isAdminPage && <Footer />}
-    </>
-  );
+  // All other pages use your original look (no dark theme)
+  return <Component {...pageProps} />;
 }

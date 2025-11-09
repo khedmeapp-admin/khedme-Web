@@ -1,75 +1,50 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
-import toast from "react-hot-toast";
 
-export default function VerifyOtp() {
+export default function VerifyOTP() {
   const router = useRouter();
-  const [phone, setPhone] = useState(router.query.phone || "");
   const [otp, setOtp] = useState("");
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
-  const handleVerify = async () => {
-    if (!otp) return toast.error("Enter the OTP code first");
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     setLoading(true);
+    setError("");
+
+    const signupData = JSON.parse(localStorage.getItem("signupData"));
 
     try {
-      const res = await fetch("https://khedme-api.onrender.com/auth/verify-otp", {
+      const res = await fetch("/api/auth/verify-otp", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ phone, otp }),
+        body: JSON.stringify({ email: signupData.email, otp }),
       });
-
       const data = await res.json();
-      if (!res.ok) throw new Error(data.message || "Invalid OTP");
 
-      // ✅ Save provider info for dashboard access
-      if (data.provider) {
-        localStorage.setItem("provider", JSON.stringify(data.provider));
+      if (data.success) {
+        localStorage.setItem("otpVerified", "true");
+        router.push("/set-password");
       } else {
-        // fallback if backend doesn’t send provider yet
-        localStorage.setItem(
-          "provider",
-          JSON.stringify({ id: 1, name: "Demo Provider", phone })
-        );
+        setError(data.message || "Invalid OTP");
       }
-
-      toast.success("Login successful ✅");
-      router.push("/provider/dashboard"); // ✅ Go straight to provider dashboard
     } catch (err) {
-      toast.error(err.message);
-    } finally {
-      setLoading(false);
+      setError("Network error. Try again.");
     }
+
+    setLoading(false);
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-orange-600 to-black">
-      <div className="bg-white/10 p-8 rounded-2xl backdrop-blur-md shadow-lg w-96">
-        <h1 className="text-center text-white text-xl font-bold mb-6">
-          Verify OTP
-        </h1>
-        <p className="text-sm text-orange-200 text-center mb-4">
-          Enter the 6-digit code sent to{" "}
-          <span className="font-semibold">{phone}</span>
-        </p>
-
-        <input
-          type="text"
-          value={otp}
-          onChange={(e) => setOtp(e.target.value)}
-          maxLength={6}
-          placeholder="123456"
-          className="w-full mb-4 px-4 py-2 rounded-md bg-white text-black focus:outline-none focus:ring-2 focus:ring-orange-400"
-        />
-
-        <button
-          onClick={handleVerify}
-          disabled={loading}
-          className="w-full bg-orange-500 hover:bg-orange-600 text-white py-2 rounded-md font-semibold transition"
-        >
+    <div className="max-w-md mx-auto p-6 mt-12 bg-white rounded shadow">
+      <h1 className="text-2xl font-bold mb-4">Verify OTP</h1>
+      {error && <p className="text-red-500 mb-2">{error}</p>}
+      <form onSubmit={handleSubmit} className="space-y-3">
+        <input type="text" placeholder="Enter OTP" value={otp} onChange={(e) => setOtp(e.target.value)} required className="w-full p-2 border rounded"/>
+        <button type="submit" disabled={loading} className="w-full bg-orange-500 text-white p-2 rounded">
           {loading ? "Verifying..." : "Verify OTP"}
         </button>
-      </div>
+      </form>
     </div>
   );
 }

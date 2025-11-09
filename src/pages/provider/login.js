@@ -1,5 +1,5 @@
 // pages/provider/login.js
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import toast from "react-hot-toast";
 
@@ -11,6 +11,16 @@ export default function ProviderLogin() {
   const [providerId, setProviderId] = useState(null);
   const [loading, setLoading] = useState(false);
 
+  // ✅ Auto-redirect if already logged in
+  useEffect(() => {
+    const existing = localStorage.getItem("provider");
+    if (existing) {
+      toast.success("Welcome back!");
+      router.push("/provider/dashboard");
+    }
+  }, [router]);
+
+  // ✅ Step 1: Request OTP
   const handleRequestOtp = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -20,11 +30,13 @@ export default function ProviderLogin() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ phone }),
       });
+
       const data = await res.json();
       if (!res.ok) throw new Error(data.message);
+
       setProviderId(data.providerId);
       setStep(2);
-      toast.success("OTP sent (demo code: 123456)");
+      toast.success("OTP sent (demo: 123456)");
     } catch (err) {
       toast.error(err.message);
     } finally {
@@ -32,6 +44,7 @@ export default function ProviderLogin() {
     }
   };
 
+  // ✅ Step 2: Verify OTP
   const handleVerifyOtp = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -41,6 +54,7 @@ export default function ProviderLogin() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ providerId, otp }),
       });
+
       const data = await res.json();
       if (!res.ok) throw new Error(data.message);
 
@@ -51,6 +65,17 @@ export default function ProviderLogin() {
       toast.error(err.message);
     } finally {
       setLoading(false);
+    }
+  };
+
+  // ✅ Manual “Already logged in?” handler
+  const handleAlreadyLoggedIn = () => {
+    const existing = localStorage.getItem("provider");
+    if (existing) {
+      toast.success("Redirecting...");
+      router.push("/provider/dashboard");
+    } else {
+      toast.error("No saved login found.");
     }
   };
 
@@ -94,6 +119,14 @@ export default function ProviderLogin() {
             </button>
           </form>
         )}
+
+        {/* 👇 Extra link for returning users */}
+        <button
+          onClick={handleAlreadyLoggedIn}
+          className="w-full mt-4 text-orange-500 hover:underline text-sm"
+        >
+          Already logged in?
+        </button>
       </div>
     </div>
   );

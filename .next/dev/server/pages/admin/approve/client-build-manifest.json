@@ -1,0 +1,5 @@
+{
+  "/admin/approve": [
+    "static/chunks/pages/admin/approve.js"
+  ]
+}

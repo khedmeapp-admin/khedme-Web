@@ -1,26 +1,31 @@
-// pages/provider/profile.js
+// src/pages/provider/profile.js
 import { useState, useEffect } from "react";
+import { useRouter } from "next/router";
 import toast from "react-hot-toast";
 
 export default function ProviderProfile() {
+  const router = useRouter();
   const API_BASE = "https://khedme-api.onrender.com";
-  const [provider, setProvider] = useState({
-    id: 1, // placeholder until auth added
-    name: "",
-    phone: "",
-    district: "",
-    branch: "",
-    service: "",
-    available: true,
-  });
-  const [loading, setLoading] = useState(false);
+
+  const [provider, setProvider] = useState(null);
+  const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
 
-  /* ---------------------------------------------------
-     ✅ Fetch Provider Profile
-  --------------------------------------------------- */
+  // ✅ Load provider from localStorage or redirect
+  useEffect(() => {
+    const stored = localStorage.getItem("provider");
+    if (!stored) {
+      toast.error("Please log in first");
+      router.push("/provider/login");
+    } else {
+      const parsed = JSON.parse(stored);
+      setProvider(parsed);
+    }
+  }, [router]);
+
+  // ✅ Fetch profile from backend after login
   const fetchProfile = async () => {
-    setLoading(true);
+    if (!provider?.id) return;
     try {
       const res = await fetch(`${API_BASE}/api/providers/${provider.id}`);
       const data = await res.json();
@@ -39,12 +44,10 @@ export default function ProviderProfile() {
   };
 
   useEffect(() => {
-    fetchProfile();
-  }, []);
+    if (provider?.id) fetchProfile();
+  }, [provider?.id]);
 
-  /* ---------------------------------------------------
-     ✅ Save Profile Updates
-  --------------------------------------------------- */
+  // ✅ Save profile updates
   const saveProfile = async (e) => {
     e.preventDefault();
     setSaving(true);
@@ -56,8 +59,12 @@ export default function ProviderProfile() {
       });
 
       const data = await res.json();
-      if (data.success) toast.success("Profile updated ✅");
-      else toast.error("Failed to update");
+      if (data.success) {
+        toast.success("Profile updated ✅");
+        localStorage.setItem("provider", JSON.stringify(provider)); // keep in sync
+      } else {
+        toast.error("Failed to update");
+      }
     } catch (err) {
       console.error("❌ Error saving profile:", err);
       toast.error("Error updating profile");
@@ -66,9 +73,7 @@ export default function ProviderProfile() {
     }
   };
 
-  /* ---------------------------------------------------
-     ✅ Toggle Availability
-  --------------------------------------------------- */
+  // ✅ Toggle availability
   const toggleAvailability = async () => {
     try {
       const res = await fetch(`${API_BASE}/api/providers/update`, {
@@ -82,9 +87,11 @@ export default function ProviderProfile() {
 
       const data = await res.json();
       if (data.success) {
-        setProvider((prev) => ({ ...prev, available: !prev.available }));
+        const updated = { ...provider, available: !provider.available };
+        setProvider(updated);
+        localStorage.setItem("provider", JSON.stringify(updated));
         toast.success(
-          `Now marked as ${!provider.available ? "available ✅" : "unavailable ⛔"}`
+          `Now marked as ${updated.available ? "available ✅" : "unavailable ⛔"}`
         );
       } else toast.error("Failed to update availability");
     } catch (err) {
@@ -93,10 +100,9 @@ export default function ProviderProfile() {
     }
   };
 
-  /* ---------------------------------------------------
-     🧱 UI
-  --------------------------------------------------- */
-  if (loading) return <p className="text-center mt-10 text-gray-500">Loading...</p>;
+  // 🧱 UI
+  if (loading || !provider)
+    return <p className="text-center mt-10 text-gray-500">Loading...</p>;
 
   return (
     <div className="max-w-lg mx-auto p-6 bg-white rounded-2xl shadow-md mt-10">
@@ -106,11 +112,11 @@ export default function ProviderProfile() {
 
       <form onSubmit={saveProfile} className="space-y-4">
         <div>
-          <label className="block font-medium mb-1">Name</label>
+          <label className="block font-medium mb-1">Full Name</label>
           <input
             type="text"
-            value={provider.name}
-            onChange={(e) => setProvider({ ...provider, name: e.target.value })}
+            value={provider.full_name || ""}
+            onChange={(e) => setProvider({ ...provider, full_name: e.target.value })}
             className="w-full border rounded-lg p-2"
             placeholder="Enter your name"
             required
@@ -121,11 +127,9 @@ export default function ProviderProfile() {
           <label className="block font-medium mb-1">Phone</label>
           <input
             type="text"
-            value={provider.phone}
-            onChange={(e) => setProvider({ ...provider, phone: e.target.value })}
-            className="w-full border rounded-lg p-2"
-            placeholder="Enter your phone number"
-            required
+            value={provider.phone || ""}
+            readOnly
+            className="w-full border rounded-lg p-2 bg-gray-100 text-gray-500 cursor-not-allowed"
           />
         </div>
 
@@ -133,21 +137,19 @@ export default function ProviderProfile() {
           <label className="block font-medium mb-1">District</label>
           <input
             type="text"
-            value={provider.district}
+            value={provider.district || ""}
             onChange={(e) => setProvider({ ...provider, district: e.target.value })}
             className="w-full border rounded-lg p-2"
             placeholder="e.g. Beirut"
-            required
           />
         </div>
 
         <div>
           <label className="block font-medium mb-1">Branch</label>
           <select
-            value={provider.branch}
+            value={provider.branch || ""}
             onChange={(e) => setProvider({ ...provider, branch: e.target.value })}
             className="w-full border rounded-lg p-2"
-            required
           >
             <option value="">Select a branch</option>
             <option value="On-site">On-site</option>
@@ -160,11 +162,10 @@ export default function ProviderProfile() {
           <label className="block font-medium mb-1">Service</label>
           <input
             type="text"
-            value={provider.service}
+            value={provider.service || ""}
             onChange={(e) => setProvider({ ...provider, service: e.target.value })}
             className="w-full border rounded-lg p-2"
             placeholder="e.g. Plumbing, Graphic Design..."
-            required
           />
         </div>
 

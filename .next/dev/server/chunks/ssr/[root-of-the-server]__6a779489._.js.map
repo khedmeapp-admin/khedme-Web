@@ -1,0 +1,6 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 26, "column": 0}, "map": {"version":3,"sources":["file:///D:/Khedme/Khedme-Web/src/pages/_app.js"],"sourcesContent":["// src/pages/_app.js\r\nimport \"@/styles/globals.css\";\r\nimport { ThemeProvider } from \"next-themes\";\r\nimport { Toaster } from \"react-hot-toast\";\r\n\r\nexport default function App({ Component, pageProps }) {\r\n  return (\r\n    <ThemeProvider attribute=\"class\" defaultTheme=\"light\" enableSystem={false}>\r\n      {/* Global Toast Notifications */}\r\n      <Toaster position=\"top-center\" />\r\n\r\n      {/* App Wrapper */}\r\n      <div className=\"min-h-screen bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors duration-300\">\r\n        <Component {...pageProps} />\r\n      </div>\r\n    </ThemeProvider>\r\n  );\r\n}\r\n"],"names":[],"mappings":"AAAA,oBAAoB;;;;;;AAEpB;AACA;;;;;;;;;;AAEe,SAAS,IAAI,EAAE,SAAS,EAAE,SAAS,EAAE;IAClD,qBACE,qKAAC,6IAAa;QAAC,WAAU;QAAQ,cAAa;QAAQ,cAAc;;0BAElE,qKAAC,qJAAO;gBAAC,UAAS;;;;;;0BAGlB,qKAAC;gBAAI,WAAU;0BACb,cAAA,qKAAC;oBAAW,GAAG,SAAS;;;;;;;;;;;;;;;;;AAIhC","debugId":null}}]
+}

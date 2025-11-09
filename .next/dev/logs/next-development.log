@@ -1,0 +1,9 @@
+[00:00:01.011] Server  LOG      ✓ Ready in 660ms
+[00:00:09.207] Server  LOG     🏁 Rendering Home Page
+[00:00:10.148] Browser LOG     🏁 Rendering Home Page
+[00:00:36.796] Browser ERROR   %o
+
+%s
+
+%s
+ {} The above error occurred in the <ForwardRef(LinkComponent)> component. React will try to recreate this component tree from scratch using the error boundary you provided, PagesDevOverlayErrorBoundary.

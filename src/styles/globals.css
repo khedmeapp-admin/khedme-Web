@@ -6,3 +6,36 @@ body {
   background-color: theme('colors.background.DEFAULT');
   color: theme('colors.text.DEFAULT');
 }
+
+/* -------------------- Input & Button Helpers -------------------- */
+
+/* Input fields */
+.input-field {
+  padding: 0.75rem 1rem;
+  border: 1px solid #e5e7eb; /* light gray */
+  border-radius: 0.75rem; /* rounded corners */
+  outline: none;
+  transition: all 0.2s;
+  width: 100%;
+}
+
+.input-field:focus {
+  border-color: #f97316; /* orange */
+  box-shadow: 0 0 0 2px rgba(249, 115, 22, 0.2);
+}
+
+/* Primary button */
+.btn-primary {
+  background-color: #f97316; /* orange */
+  color: white;
+  padding: 0.75rem;
+  border-radius: 0.75rem;
+  font-weight: 500;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-primary:hover {
+  background-color: #ea580c; /* darker orange */
+}

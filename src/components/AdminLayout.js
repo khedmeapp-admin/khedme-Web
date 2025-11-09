@@ -1,34 +1,65 @@
-// D:\Khedme\Khedme-Web\src\components\AdminLayout.js
+"use client";
+import { useTheme } from "next-themes";
 import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { Sun, Moon, Users, Briefcase, FileText } from "lucide-react";
+import { usePathname } from "next/navigation";
 
 export default function AdminLayout({ children }) {
+  const { theme, setTheme } = useTheme();
+  const pathname = usePathname();
+
+  const navItems = [
+    { name: "Pending Providers", href: "/admin/approve", icon: <Users size={18} /> },
+    { name: "Jobs", href: "/admin/jobs", icon: <Briefcase size={18} /> },
+    { name: "Applications", href: "/admin/applications", icon: <FileText size={18} /> },
+  ];
+
   return (
-    <div className="min-h-screen bg-gray-50 text-gray-800">
-      {/* Navbar */}
-      <nav className="flex justify-between items-center bg-orange-500 text-white px-6 py-4 shadow-md">
-        <div className="flex items-center gap-3">
-          <img src="/logo.png" alt="Khedme Logo" className="w-8 h-8 rounded" />
-          <h1 className="text-lg font-semibold">Khedme Admin</h1>
+    <div className="flex min-h-screen bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100">
+      {/* Sidebar */}
+      <aside className="w-64 bg-orange-500 text-white flex flex-col justify-between p-4">
+        <div>
+          <h1 className="text-xl font-bold mb-6">Khedme Admin</h1>
+          <nav className="flex flex-col gap-2">
+            {navItems.map((item) => (
+              <Link key={item.href} href={item.href}>
+                <Button
+                  variant={pathname === item.href ? "secondary" : "ghost"}
+                  className={`w-full justify-start text-white hover:bg-orange-600 ${
+                    pathname === item.href ? "bg-orange-600" : ""
+                  }`}
+                >
+                  <span className="mr-2">{item.icon}</span>
+                  {item.name}
+                </Button>
+              </Link>
+            ))}
+          </nav>
         </div>
 
-        <div className="flex items-center gap-4">
-          <Link href="/admin/home" className="hover:underline">
-            Dashboard
-          </Link>
-          <Link href="/admin/approve" className="hover:underline">
-            Approvals
-          </Link>
-          <Link
-            href="/"
-            className="bg-white text-orange-600 px-3 py-1 rounded-lg font-medium hover:bg-orange-100"
+        {/* Dark Mode Toggle */}
+        <div className="mt-4 border-t border-white/20 pt-3">
+          <Button
+            variant="outline"
+            onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+            className="w-full flex justify-between bg-transparent text-white border-white/30 hover:bg-white/10"
           >
-            Home
-          </Link>
+            {theme === "dark" ? (
+              <>
+                <Sun size={16} /> Light Mode
+              </>
+            ) : (
+              <>
+                <Moon size={16} /> Dark Mode
+              </>
+            )}
+          </Button>
         </div>
-      </nav>
+      </aside>
 
-      {/* Page content */}
-      <main className="p-6">{children}</main>
+      {/* Main Content */}
+      <main className="flex-1 p-8">{children}</main>
     </div>
   );
 }
