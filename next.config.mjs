@@ -1,9 +1,7 @@
-import path from "path";
-
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  pageExtensions: ["js", "jsx"], // Only JS/JSX files
+  pageExtensions: ["js", "jsx"],
   images: {
     remotePatterns: [
       {
@@ -14,10 +12,8 @@ const nextConfig = {
       },
     ],
   },
-  webpack: (config) => {
-    // Alias @/ to src/ for absolute imports
-    config.resolve.alias["@"] = path.resolve(__dirname, "src");
-    return config;
+  experimental: {
+    turbo: false, // Disable Turbopack
   },
 };
 

@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import AdminLayout from "@/layouts/AdminLayout";
+import AdminLayout from '@/components/AdminLayout'
 
 export default function ProviderDetails() {
   const router = useRouter();

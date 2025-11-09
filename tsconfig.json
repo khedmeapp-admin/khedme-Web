@@ -4,13 +4,13 @@
     "module": "nodenext",
     "moduleResolution": "nodenext",
     "jsx": "react-jsx",
-    "allowJs": true,           // Include JS files
-    "checkJs": false,          // Don't type-check JS to avoid 1000+ errors
-    "noEmit": true,            // Don't output files
+    "allowJs": true,
+    "checkJs": true,
+    "noEmit": true,
     "isolatedModules": true,
-    "strict": false,           // Disable strict checks for JS
+    "strict": false,
     "skipLibCheck": true,
-    "baseUrl": ".",            // Base path for @/ imports
+    "baseUrl": ".",
     "paths": {
       "@/*": ["src/*"]
     },

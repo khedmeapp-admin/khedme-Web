@@ -1,10 +1,10 @@
 {
   "compilerOptions": {
-    "baseUrl": ".",       // Use project root
+    "baseUrl": "src",
     "paths": {
-      "@/*": ["src/*"]    // Map @/ to src/
+      "@/*": ["*"]
     }
   },
-  "include": ["next-env.d.ts", "src/**/*"],
-  "exclude": ["node_modules", ".next"]
+  "include": ["src/**/*", "**/*.js", "**/*.jsx"],
+  "exclude": ["node_modules", ".next", "dist"]
 }

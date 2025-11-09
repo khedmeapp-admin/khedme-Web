@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import AdminLayout from "@/layouts/AdminLayout";
+import AdminLayout from '@/components/AdminLayout'
 import { CheckCircle, XCircle, Loader2, UserCheck, UserX } from "lucide-react";
 
 export default function ManageProviders() {
